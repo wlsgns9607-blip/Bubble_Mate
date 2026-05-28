@@ -114,6 +114,9 @@ function buildCategories() {
       </span>
       <span class="category-label">${cat.label}</span>
     `;
+    li.addEventListener("click", () => {
+      alert("카테고리 상품 준비 중입니다.");
+    });
     list.appendChild(li);
   });
 }
