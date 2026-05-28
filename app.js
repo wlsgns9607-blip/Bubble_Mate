@@ -1,0 +1,640 @@
+/* =========================================================
+   Bubble Mate — 동작 스크립트
+   ========================================================= */
+
+/* ---------- 유틸 ---------- */
+const $  = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+const won = (n) => n.toLocaleString("ko-KR") + "원";
+
+// 사진이 아직 없으므로 alt 안내문을 보여주는 placeholder 박스를 만든다.
+// (나중에 실제 <img src="..."> 를 넣으면 이 함수 대신 진짜 이미지가 들어감)
+function phImage(alt, extraClass = "", src = "") {
+  if (src) {
+    const img = document.createElement("img");
+    img.className = extraClass;
+    img.src = src;
+    img.alt = alt;
+    return img;
+  }
+  const div = document.createElement("div");
+  div.className = "img-ph " + extraClass;
+  div.textContent = alt;
+  div.setAttribute("role", "img");
+  div.setAttribute("aria-label", alt);
+  return div;
+}
+
+/* 별점 문자열 (꽉찬 별 + 빈 별) */
+function starString(rating) {
+  const full = Math.round(rating);
+  return "★".repeat(full) + "☆".repeat(5 - full);
+}
+
+/* =========================================================
+   1) 히어로 캐러셀 — 박스 안 이미지+텍스트만 슬라이드
+   ========================================================= */
+let heroIndex = 0;
+let heroTimer = null;
+
+function buildHero() {
+  const track = $("#heroTrack");
+  const dots  = $("#heroDots");
+  track.innerHTML = "";
+  dots.innerHTML  = "";
+
+  HERO_SLIDES.forEach((slide, i) => {
+    const el = document.createElement("div");
+    el.className = "hero-slide" + (i === 0 ? " active" : "");
+
+    // 배경 이미지 (실제 이미지 혹은 placeholder)
+    if (slide.src) {
+      const img = document.createElement("img");
+      img.className = "hero-slide-bg";
+      img.src = slide.src;
+      img.alt = slide.alt;
+      el.appendChild(img);
+    } else {
+      el.appendChild(phImage(slide.alt, "hero-slide-bg"));
+    }
+
+    // 어두운 오버레이
+    const overlay = document.createElement("div");
+    overlay.className = "hero-overlay";
+    el.appendChild(overlay);
+
+    // 텍스트 콘텐츠
+    const content = document.createElement("div");
+    content.className = "hero-content";
+    content.innerHTML = `
+      <span class="hero-badge">${slide.badge}</span>
+      <h2 class="hero-title">${slide.title.join("<br>")}</h2>
+      <p class="hero-desc">${slide.desc}</p>
+      <button class="hero-cta">${slide.cta} →</button>
+    `;
+    el.appendChild(content);
+    track.appendChild(el);
+
+    // 점(dot)
+    const dot = document.createElement("span");
+    dot.className = "hero-dot" + (i === 0 ? " active" : "");
+    dot.addEventListener("click", () => goHero(i));
+    dots.appendChild(dot);
+  });
+}
+
+function goHero(i) {
+  const slides = $$(".hero-slide");
+  const dots   = $$(".hero-dot");
+  heroIndex = (i + slides.length) % slides.length;
+  slides.forEach((s, idx) => s.classList.toggle("active", idx === heroIndex));
+  dots.forEach((d, idx) => d.classList.toggle("active", idx === heroIndex));
+  resetHeroTimer();
+}
+function nextHero() { goHero(heroIndex + 1); }
+function prevHero() { goHero(heroIndex - 1); }
+
+function resetHeroTimer() {
+  clearInterval(heroTimer);
+  heroTimer = setInterval(nextHero, 5500);
+}
+
+/* =========================================================
+   2) 카테고리 렌더링
+   ========================================================= */
+function buildCategories() {
+  const list = $("#categoryList");
+  list.innerHTML = "";
+  CATEGORIES.forEach(cat => {
+    const li = document.createElement("li");
+    li.className = "category-item";
+    li.innerHTML = `
+      <span class="category-icon">
+        <svg viewBox="0 0 24 24"><path d="${cat.icon}"/></svg>
+      </span>
+      <span class="category-label">${cat.label}</span>
+    `;
+    list.appendChild(li);
+  });
+}
+
+/* =========================================================
+   3) 인기상품 카드 8개 렌더링
+   ========================================================= */
+function buildProducts() {
+  const grid = $("#productGrid");
+  grid.innerHTML = "";
+
+  PRODUCTS.slice(0, 8).forEach((p) => {
+    const card = document.createElement("article");
+    card.className = "product-card";
+
+    const thumb = document.createElement("div");
+    thumb.className = "product-thumb";
+    thumb.appendChild(phImage(p.mainAlt, "", p.mainSrc));
+
+    // 찜 버튼
+    const wish = document.createElement("button");
+    wish.className = "wish-btn";
+    wish.setAttribute("aria-label", "찜하기");
+    wish.innerHTML = `<svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>`;
+    wish.addEventListener("click", (e) => {
+      e.stopPropagation();            // 카드 클릭(상세 이동) 막기
+      wish.classList.toggle("on");
+    });
+    thumb.appendChild(wish);
+
+    const body = document.createElement("div");
+    body.className = "product-body";
+    body.innerHTML = `
+      <p class="product-brand">${p.brand}</p>
+      <p class="product-name">${p.name}</p>
+      <div class="product-price-row">
+        <span class="product-discount">${p.discount}%</span>
+        <span class="product-price">${won(p.price)}</span>
+      </div>
+      <div class="product-rating">
+        <span class="star">★</span> ${p.rating} <span>(${p.ratingCount.toLocaleString()})</span>
+      </div>
+    `;
+
+    card.appendChild(thumb);
+    card.appendChild(body);
+
+    // 카드 클릭 → 상세페이지로 (찜 버튼 제외)
+    card.addEventListener("click", () => openDetail(p.id));
+
+    grid.appendChild(card);
+  });
+}
+
+/* =========================================================
+   4) 리뷰 렌더링
+   ========================================================= */
+function buildReviews() {
+  const grid = $("#reviewGrid");
+  grid.innerHTML = "";
+  REVIEWS.forEach(r => {
+    const item = document.createElement("div");
+    item.className = "review-item";
+    
+    // 실제 이미지 또는 placeholder
+    if (r.src) {
+      const img = document.createElement("img");
+      img.src = r.src;
+      img.alt = r.alt;
+      item.appendChild(img);
+    } else {
+      item.appendChild(phImage(r.alt));
+    }
+    
+    const stars = document.createElement("div");
+    stars.className = "review-stars";
+    stars.textContent = "★".repeat(r.stars);
+    item.appendChild(stars);
+
+    if (r.text) {
+      const text = document.createElement("p");
+      text.className = "review-text";
+      text.textContent = r.text;
+      item.appendChild(text);
+    }
+
+    grid.appendChild(item);
+  });
+}
+
+/* =========================================================
+   5) 화면 전환 (홈 ↔ 상세) — 방식 B
+   ========================================================= */
+let currentProduct = null;
+let detailQty = 1;
+
+function openDetail(productId) {
+  const p = PRODUCTS.find(x => x.id === productId);
+  if (!p) return;
+  currentProduct = p;
+  detailQty = 1;
+  renderDetail(p);
+
+  $("#homeView").hidden = true;
+  $("#detailView").hidden = false;
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  // 주소 해시로 뒤로가기 지원
+  history.pushState({ view: "detail", id: productId }, "", "#product=" + productId);
+}
+
+function goHome() {
+  $("#detailView").hidden = true;
+  $("#homeView").hidden = false;
+  closeOptionSheet();
+  window.scrollTo({ top: 0 });
+  if (location.hash) history.pushState({ view: "home" }, "", location.pathname);
+}
+
+/* 상세페이지 내용 채우기 (상품마다 전부 바뀜) */
+function renderDetail(p) {
+  // 갤러리 메인
+  const mainWrap = $("#galleryMain");
+  mainWrap.innerHTML = "";
+  mainWrap.appendChild(phImage(p.mainAlt, "", p.mainSrc));
+
+  // 썸네일
+  const thumbs = $("#galleryThumbs");
+  thumbs.innerHTML = "";
+  const allThumbAlts = [p.mainAlt, ...p.thumbs];
+  allThumbAlts.slice(0, 3).forEach((alt, i) => {
+    const t = document.createElement("div");
+    t.className = "gallery-thumb" + (i === 0 ? " active" : "");
+    t.appendChild(phImage(alt, "", i === 0 ? p.mainSrc : ""));
+    t.addEventListener("click", () => {
+      $$(".gallery-thumb").forEach(x => x.classList.remove("active"));
+      t.classList.add("active");
+      mainWrap.innerHTML = "";
+      mainWrap.appendChild(phImage(alt, "", i === 0 ? p.mainSrc : ""));
+    });
+    thumbs.appendChild(t);
+  });
+
+  // 텍스트 정보
+  $("#detailBrand").textContent       = p.brand;
+  $("#detailName").textContent        = p.name;
+  $("#detailStars").textContent       = starString(p.rating);
+  $("#detailRatingNum").textContent   = p.rating;
+  $("#detailRatingCount").textContent = `(${p.ratingCount.toLocaleString()})`;
+  $("#detailDiscount").textContent    = p.discount + "%";
+  $("#detailPrice").textContent       = p.price.toLocaleString() + " KRW";
+
+  const origin = Math.round(p.price / (1 - p.discount / 100));
+  $("#detailOrigin").textContent = origin.toLocaleString() + " KRW";
+
+  $("#detailTip").textContent = p.tip;
+
+  // 수량 리셋
+  $("#qtyValue").textContent = detailQty;
+
+  // 주요 특징
+  const fg = $("#featureGrid");
+  fg.innerHTML = "";
+  p.features.forEach(f => {
+    const card = document.createElement("div");
+    card.className = "feature-card";
+    card.innerHTML = `
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <div class="feature-text">
+        <h3>${f.title}</h3>
+        <p>${f.body}</p>
+      </div>
+    `;
+    fg.appendChild(card);
+  });
+
+  // 사용 방법
+  const steps = $("#stepsList");
+  steps.innerHTML = "";
+  p.steps.forEach((s, i) => {
+    const li = document.createElement("li");
+    li.className = "step";
+    li.innerHTML = `
+      <span class="step-num">0${i + 1}</span>
+      <div class="step-card">
+        <h3>${s.title}</h3>
+        <p>${s.body}</p>
+      </div>
+    `;
+    steps.appendChild(li);
+  });
+}
+
+/* =========================================================
+   6) 수량 조절 (상세페이지)
+   ========================================================= */
+function bindDetailQty() {
+  $("#qtyMinus").addEventListener("click", () => {
+    detailQty = Math.max(1, detailQty - 1);
+    $("#qtyValue").textContent = detailQty;
+  });
+  $("#qtyPlus").addEventListener("click", () => {
+    detailQty++;
+    $("#qtyValue").textContent = detailQty;
+  });
+}
+
+/* =========================================================
+   7) 옵션 슬라이드업 (구매하기) + 토스페이
+   ========================================================= */
+let sheetVolumeIdx = 0;
+let sheetQty = 1;
+
+function openOptionSheet() {
+  if (!currentProduct) return;
+  sheetVolumeIdx = 0;
+  sheetQty = detailQty;
+
+  $("#optionProduct").textContent = currentProduct.name;
+
+  // 용량 칩
+  const chips = $("#optionChips");
+  chips.innerHTML = "";
+  VOLUME_OPTIONS.forEach((v, i) => {
+    const chip = document.createElement("button");
+    chip.className = "option-chip" + (i === 0 ? " active" : "");
+    chip.textContent = v.label;
+    chip.addEventListener("click", () => {
+      sheetVolumeIdx = i;
+      $$(".option-chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      updateOptionTotal();
+    });
+    chips.appendChild(chip);
+  });
+
+  $("#sheetQty").textContent = sheetQty;
+  updateOptionTotal();
+
+  $("#optionOverlay").hidden = false;
+  $("#optionSheet").hidden = false;
+}
+
+function closeOptionSheet() {
+  $("#optionOverlay").hidden = true;
+  $("#optionSheet").hidden = true;
+}
+
+function updateOptionTotal() {
+  const base = currentProduct.price + VOLUME_OPTIONS[sheetVolumeIdx].add;
+  $("#optionTotal").textContent = won(base * sheetQty);
+}
+
+function bindOptionSheet() {
+  $("#sheetMinus").addEventListener("click", () => {
+    sheetQty = Math.max(1, sheetQty - 1);
+    $("#sheetQty").textContent = sheetQty;
+    updateOptionTotal();
+  });
+  $("#sheetPlus").addEventListener("click", () => {
+    sheetQty++;
+    $("#sheetQty").textContent = sheetQty;
+    updateOptionTotal();
+  });
+  $("#optionClose").addEventListener("click", closeOptionSheet);
+  $("#optionOverlay").addEventListener("click", closeOptionSheet);
+  $("#tossBtn").addEventListener("click", () => {
+    const base = currentProduct.price + VOLUME_OPTIONS[sheetVolumeIdx].add;
+    const amount = base * sheetQty;
+    const orderId = "order_" + new Date().getTime() + "_" + Math.floor(Math.random() * 1000);
+    const orderName = currentProduct.name + " (" + VOLUME_OPTIONS[sheetVolumeIdx].label + ")";
+
+    closeOptionSheet();
+    
+    try {
+      // 1. 토스페이먼츠 객체 초기화 (제공된 테스트 API 키)
+      const tossPayments = TossPayments("test_ck_Z1aOwX7K8mEZMmB0obdj8yQxzvNP");
+      
+      // 2. 결제창 띄우기 (카드 결제)
+      tossPayments.requestPayment('카드', {
+        amount: amount,
+        orderId: orderId,
+        orderName: orderName,
+        customerName: '테스트고객',
+        successUrl: window.location.origin + window.location.pathname + '?success=true',
+        failUrl: window.location.origin + window.location.pathname + '?fail=true',
+      }).catch(function (error) {
+        if (error.code === 'USER_CANCEL') {
+          showToast('결제가 취소되었습니다.');
+        } else {
+          showToast('결제 중 오류가 발생했습니다: ' + error.message);
+        }
+      });
+    } catch (e) {
+      console.error(e);
+      showToast('결제 모듈 로드 중 오류가 발생했습니다.');
+    }
+  });
+}
+
+/* =========================================================
+   8) 토스트 메시지
+   ========================================================= */
+let toastTimer = null;
+function showToast(msg) {
+  let t = $(".toast");
+  if (!t) {
+    t = document.createElement("div");
+    t.className = "toast";
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  requestAnimationFrame(() => t.classList.add("show"));
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 2600);
+}
+
+/* =========================================================
+   9) 전역 이벤트 바인딩
+   ========================================================= */
+function bindGlobal() {
+  // 히어로 화살표
+  $("#heroPrev").addEventListener("click", prevHero);
+  $("#heroNext").addEventListener("click", nextHero);
+
+  // 로고 → 홈
+  $("#logoHome").addEventListener("click", (e) => { e.preventDefault(); goHome(); });
+
+  // 상세 구매/문의 버튼 (이벤트 위임)
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".btn-purchase")) openOptionSheet();
+    if (e.target.closest(".btn-inquiry"))  showToast("입점사 1:1 문의 채널로 연결합니다.");
+  });
+
+  // 브라우저 뒤로가기 처리
+  window.addEventListener("popstate", (e) => {
+    const st = e.state;
+    if (st && st.view === "detail") {
+      openDetailNoPush(st.id);
+    } else {
+      $("#detailView").hidden = true;
+      $("#homeView").hidden = false;
+      closeOptionSheet();
+    }
+  });
+
+  // ESC로 옵션창/모달 닫기
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeOptionSheet();
+      closeLoginModal();
+      closeSignupModal();
+    }
+  });
+
+  // 로그인 모달 이벤트
+  const loginBtn = $(".login-btn");
+  if (loginBtn) {
+    loginBtn.addEventListener("click", openLoginModal);
+  }
+  const loginClose = $("#loginClose");
+  if (loginClose) {
+    loginClose.addEventListener("click", closeLoginModal);
+  }
+  const loginBack = $(".login-back");
+  if (loginBack) {
+    loginBack.addEventListener("click", closeLoginModal);
+  }
+  const loginOverlay = $("#loginOverlay");
+  if (loginOverlay) {
+    loginOverlay.addEventListener("click", () => {
+      closeLoginModal();
+      closeSignupModal();
+    });
+  }
+
+  // 회원가입 모달 이벤트
+  const signupLink = $(".login-signup-link");
+  if (signupLink) {
+    signupLink.addEventListener("click", () => {
+      closeLoginModal();
+      openSignupModal();
+    });
+  }
+  const signupBack = $("#signupBack");
+  if (signupBack) {
+    signupBack.addEventListener("click", () => {
+      closeSignupModal();
+      openLoginModal();
+    });
+  }
+}
+
+function openLoginModal() {
+  $("#loginOverlay").hidden = false;
+  $("#loginModal").hidden = false;
+}
+
+function closeLoginModal() {
+  $("#loginOverlay").hidden = true;
+  $("#loginModal").hidden = true;
+}
+
+function openSignupModal() {
+  $("#loginOverlay").hidden = false;
+  $("#signupModal").hidden = false;
+}
+
+function closeSignupModal() {
+  $("#signupModal").hidden = true;
+}
+
+// 뒤로가기로 상세 복원할 때 (history push 없이)
+function openDetailNoPush(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  currentProduct = p;
+  detailQty = 1;
+  renderDetail(p);
+  $("#homeView").hidden = true;
+  $("#detailView").hidden = false;
+}
+
+/* =========================================================
+   11) 이벤트 슬라이더 스크롤 연동
+   ========================================================= */
+function bindEventSlider() {
+  const track = $("#eventTrack");
+  const bar = $("#eventProgressBar");
+  if (!track || !bar) return;
+
+  function updateProgress() {
+    const scrollLeft = track.scrollLeft;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    if (maxScroll <= 0) {
+      bar.style.transform = `translateX(0)`;
+      return;
+    }
+    const ratio = scrollLeft / maxScroll;
+    // progress bar moves from 0 to 400% (since width is 20%)
+    bar.style.transform = `translateX(${ratio * 400}%)`;
+  }
+  
+  track.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+  
+  // Initial check
+  setTimeout(updateProgress, 100);
+
+  // 자동 슬라이드 로직
+  let autoSlideTimer = setInterval(autoSlide, 3500);
+  
+  function autoSlide() {
+    if (track.scrollWidth - track.clientWidth <= 0) return;
+    
+    // 카드 1개 너비 계산 (gap 포함 대략)
+    const cardWidth = track.children[0].offsetWidth + 24; 
+    let nextScroll = track.scrollLeft + cardWidth;
+
+    // 복제된 마지막 카드 너머로 가면 처음으로 몰래 이동 후 다시 부드럽게 스크롤
+    if (nextScroll >= track.scrollWidth - track.clientWidth - 10) {
+      track.style.scrollBehavior = "auto"; // 애니메이션 끄기
+      track.scrollLeft = 0; // 맨 앞으로 
+      
+      // 약간의 지연 후 부드럽게 스와이프
+      setTimeout(() => {
+        track.style.scrollBehavior = "smooth";
+        track.scrollLeft = cardWidth;
+      }, 50);
+    } else {
+      track.scrollLeft = nextScroll;
+    }
+  }
+
+  // 마우스 올리면 자동 슬라이드 정지, 내리면 다시 시작
+  track.addEventListener("mouseenter", () => clearInterval(autoSlideTimer));
+  track.addEventListener("mouseleave", () => {
+    clearInterval(autoSlideTimer);
+    autoSlideTimer = setInterval(autoSlide, 3500);
+  });
+  track.addEventListener("touchstart", () => clearInterval(autoSlideTimer), { passive: true });
+  track.addEventListener("touchend", () => {
+    clearInterval(autoSlideTimer);
+    autoSlideTimer = setInterval(autoSlide, 3500);
+  }, { passive: true });
+
+  // 클릭 시 상세페이지(2페이지)로 이동하도록 연결
+  const eventCards = $$(".event-card", track);
+  eventCards.forEach((card, index) => {
+    card.addEventListener("click", () => {
+      let productId = "event-bug-cleaner";
+      const mod = index % 5;
+      if (mod === 0) productId = "event-bug-cleaner";
+      else if (mod === 1) productId = "event-interior-cleaner";
+      else if (mod === 2) productId = "event-wax-set";
+      else if (mod === 3) productId = "event-towel-set";
+      else if (mod === 4) productId = "event-alkaline-cleaner";
+      
+      openDetail(productId);
+    });
+  });
+}
+
+/* =========================================================
+   12) 초기화
+   ========================================================= */
+function init() {
+  buildHero();
+  buildCategories();
+  buildProducts();
+  buildReviews();
+  bindDetailQty();
+  bindOptionSheet();
+  bindGlobal();
+  bindEventSlider();
+  resetHeroTimer();
+
+  // 주소에 #product=... 있으면 해당 상세로 바로 진입
+  const m = location.hash.match(/product=([\w-]+)/);
+  if (m) openDetailNoPush(m[1]);
+}
+
+document.addEventListener("DOMContentLoaded", init);
