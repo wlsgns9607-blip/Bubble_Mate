@@ -294,7 +294,7 @@ const PRODUCTS = [
     brand: "EVENT",
     name: "세차타월 (S) 30장 SET",
     discount: 20,
-    price: 4500,
+    price: 12000,
     rating: 4.8,
     ratingCount: 1850,
     mainAlt: "세차타월 (S) 30장 SET 이벤트 이미지",
