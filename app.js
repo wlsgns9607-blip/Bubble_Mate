@@ -7,6 +7,96 @@ const $  = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 const won = (n) => n.toLocaleString("ko-KR") + "원";
 
+/* ---------- 로컬 스토리지 ---------- */
+function getCart() { return JSON.parse(localStorage.getItem('bubble_cart') || '[]'); }
+function saveCart(cart) {
+  localStorage.setItem('bubble_cart', JSON.stringify(cart));
+  updateCartBadge();
+}
+function addToCart(item) {
+  const cart = getCart();
+  cart.push(item);
+  saveCart(cart);
+  showToast("장바구니에 담겼습니다.");
+}
+function updateCartBadge() {
+  const cart = getCart();
+  const badge = $("#cartBadge");
+  if (badge) {
+    if (cart.length > 0) {
+      badge.hidden = false;
+      badge.textContent = cart.length > 99 ? "99+" : cart.length;
+    } else {
+      badge.hidden = true;
+    }
+  }
+}
+
+function openCartDrawer() {
+  renderCartItems();
+  $("#cartOverlay").hidden = false;
+  $("#cartDrawer").hidden = false;
+  requestAnimationFrame(() => {
+    $("#cartDrawer").classList.add("open");
+  });
+}
+
+function closeCartDrawer() {
+  $("#cartDrawer").classList.remove("open");
+  setTimeout(() => {
+    $("#cartOverlay").hidden = true;
+    $("#cartDrawer").hidden = true;
+  }, 300);
+}
+
+function renderCartItems() {
+  const cart = getCart();
+  const body = $("#cartBody");
+  const totalEl = $("#cartTotalPrice");
+  body.innerHTML = "";
+  
+  if (cart.length === 0) {
+    body.innerHTML = '<p class="cart-empty">장바구니가 비어 있습니다.</p>';
+    totalEl.textContent = "0원";
+    return;
+  }
+
+  let total = 0;
+  cart.forEach((item, index) => {
+    total += item.price * item.qty;
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <div class="cart-item-info">
+        <span class="cart-item-name">${item.name} <span style="color:#64748b; font-weight:400; margin-left:4px;">x${item.qty}</span></span>
+        <span class="cart-item-vol">옵션: ${item.volume}</span>
+        <span class="cart-item-price">${won(item.price * item.qty)}</span>
+      </div>
+      <span class="cart-item-del" data-index="${index}">삭제</span>
+    `;
+    body.appendChild(div);
+  });
+
+  $$(".cart-item-del", body).forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const idx = e.target.getAttribute("data-index");
+      cart.splice(idx, 1);
+      saveCart(cart);
+      renderCartItems();
+    });
+  });
+
+  totalEl.textContent = won(total);
+}
+
+function recordRecentView(productId) {
+  let recent = JSON.parse(localStorage.getItem('bubble_recent') || '[]');
+  recent = recent.filter(id => id !== productId);
+  recent.unshift(productId);
+  if (recent.length > 10) recent.pop();
+  localStorage.setItem('bubble_recent', JSON.stringify(recent));
+}
+
 // 사진이 아직 없으므로 alt 안내문을 보여주는 placeholder 박스를 만든다.
 // (나중에 실제 <img src="..."> 를 넣으면 이 함수 대신 진짜 이미지가 들어감)
 function phImage(alt, extraClass = "", src = "") {
@@ -219,6 +309,7 @@ function openDetail(productId) {
   currentProduct = p;
   detailQty = 1;
   renderDetail(p);
+  recordRecentView(productId);
 
   $("#homeView").hidden = true;
   $("#detailView").hidden = false;
@@ -384,6 +475,22 @@ function bindOptionSheet() {
   });
   $("#optionClose").addEventListener("click", closeOptionSheet);
   $("#optionOverlay").addEventListener("click", closeOptionSheet);
+  
+  const addCartBtn = $("#addCartBtn");
+  if (addCartBtn) {
+    addCartBtn.addEventListener("click", () => {
+      if (!currentProduct) return;
+      addToCart({
+        id: currentProduct.id,
+        name: currentProduct.name,
+        qty: sheetQty,
+        volume: VOLUME_OPTIONS[sheetVolumeIdx].label,
+        price: currentProduct.price + VOLUME_OPTIONS[sheetVolumeIdx].add
+      });
+      closeOptionSheet();
+    });
+  }
+
   $("#tossBtn").addEventListener("click", () => {
     const base = currentProduct.price + VOLUME_OPTIONS[sheetVolumeIdx].add;
     const amount = base * sheetQty;
@@ -446,10 +553,19 @@ function bindGlobal() {
   // 로고 → 홈
   $("#logoHome").addEventListener("click", (e) => { e.preventDefault(); goHome(); });
 
-  // 상세 구매/문의 버튼 (이벤트 위임)
+  // 네비게이션 링크 클릭 시 알림
+  $$(".nav-link").forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      alert("카테고리 상품 준비 중입니다.");
+    });
+  });
+
+  // 버튼 공통 이벤트 (이벤트 위임)
   document.addEventListener("click", (e) => {
     if (e.target.closest(".btn-purchase")) openOptionSheet();
     if (e.target.closest(".btn-inquiry"))  showToast("입점사 1:1 문의 채널로 연결합니다.");
+    if (e.target.closest(".hero-cta")) alert("상품 준비 중입니다.");
   });
 
   // 브라우저 뒤로가기 처리
@@ -471,6 +587,22 @@ function bindGlobal() {
       closeLoginModal();
       closeSignupModal();
     }
+  });
+
+  // 장바구니 드로어 이벤트
+  const cartBtn = $("#cartBtn");
+  if (cartBtn) cartBtn.addEventListener("click", openCartDrawer);
+  const cartClose = $("#cartClose");
+  if (cartClose) cartClose.addEventListener("click", closeCartDrawer);
+  const cartOverlay = $("#cartOverlay");
+  if (cartOverlay) cartOverlay.addEventListener("click", closeCartDrawer);
+  const cartCheckoutBtn = $("#cartCheckoutBtn");
+  if (cartCheckoutBtn) cartCheckoutBtn.addEventListener("click", () => {
+    if (getCart().length === 0) {
+      alert("장바구니가 비어 있습니다.");
+      return;
+    }
+    alert("결제 페이지로 이동합니다. (포트폴리오 데모용)");
   });
 
   // 로그인 모달 이벤트
@@ -537,6 +669,7 @@ function openDetailNoPush(id) {
   currentProduct = p;
   detailQty = 1;
   renderDetail(p);
+  recordRecentView(id);
   $("#homeView").hidden = true;
   $("#detailView").hidden = false;
 }
@@ -625,6 +758,7 @@ function bindEventSlider() {
    12) 초기화
    ========================================================= */
 function init() {
+  updateCartBadge();
   buildHero();
   buildCategories();
   buildProducts();

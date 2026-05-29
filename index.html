@@ -30,8 +30,9 @@
       </nav>
 
       <div class="header-icons">
-        <button class="icon-btn" aria-label="장바구니">
+        <button class="icon-btn" id="cartBtn" aria-label="장바구니" style="position:relative;">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span class="cart-badge" id="cartBadge" hidden>0</span>
         </button>
         <button class="icon-btn" aria-label="내 계정">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -407,9 +408,12 @@
       <strong id="optionTotal"></strong>
     </div>
 
-    <button class="toss-btn" id="tossBtn">
-      <span class="toss-logo">toss</span> pay 원클릭 결제
-    </button>
+    <div style="display:flex; gap:10px; margin-bottom: 12px;">
+      <button class="toss-btn" id="addCartBtn" style="background:#f1f5f9; color:#1e293b; border:1px solid #cbd5e1; flex:1;">장바구니 담기</button>
+      <button class="toss-btn" id="tossBtn" style="flex:2;">
+        <span class="toss-logo">toss</span> pay 결제
+      </button>
+    </div>
     <button class="option-close" id="optionClose">닫기</button>
   </div>
 
@@ -533,6 +537,27 @@
       <div class="signup-actions">
         <button class="signup-submit">회원가입 &rarr;</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ===================== 장바구니 드로어 ===================== -->
+  <div class="cart-overlay" id="cartOverlay" hidden></div>
+  <div class="cart-drawer" id="cartDrawer" hidden>
+    <div class="cart-header">
+      <h2>장바구니</h2>
+      <button class="cart-close" id="cartClose" aria-label="닫기">
+        <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <!-- JS가 장바구니 아이템 채움 -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>총 결제금액</span>
+        <strong id="cartTotalPrice">0원</strong>
+      </div>
+      <button class="toss-btn" id="cartCheckoutBtn">결제하기</button>
     </div>
   </div>
 
