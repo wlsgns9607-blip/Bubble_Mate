@@ -1728,12 +1728,14 @@ img:not([src]), img[src=""] {
   .icon-btn { width: 34px; height: 34px; }
   
   .category-list { flex-wrap: wrap; gap: 18px 0; }
-  .category-item { flex: 0 0 25%; }
+  .category-item { flex: 0 0 33.333%; }
   .product-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
   .feature-grid { grid-template-columns: 1fr; }
   .review-grid { grid-template-columns: 1fr; gap: 16px; }
   .review-head { flex-wrap: wrap; gap: 12px; }
   
+  .event-section { padding: 0 16px; margin-top: 36px; }
+  .event-track { gap: 16px; }
   .event-card { flex: 0 0 290px; height: 220px; }
   .event-name { font-size: 18px; }
   .event-price { font-size: 20px; }
@@ -1756,7 +1758,29 @@ img:not([src]), img[src=""] {
   .footer-inner { grid-template-columns: 1fr; padding: 40px 16px 24px; }
   .hero-track { height: 340px; }
   .hero-title { font-size: 26px; }
+  .hero-content { padding: 0 20px; }
+  .hero-arrow { display: none; }
+  
   .buy-panel { padding: 28px 22px; }
+  .buy-actions { grid-template-columns: 1fr; gap: 10px; }
+  .buy-assurance { flex-direction: column; align-items: center; gap: 8px; }
+  
+  .sticky-name { max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  
+  .option-sheet {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    transform: translateY(0);
+    width: 100%;
+    border-radius: 24px 24px 0 0;
+    padding: 24px 24px 34px;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
   
   /* 모달창 모바일 최적화 */
   .login-modal { width: 92%; }
@@ -1765,6 +1789,8 @@ img:not([src]), img[src=""] {
   .signup-body { padding: 20px 16px; }
   .signup-hero { padding: 18px 0; border-radius: 20px; margin-bottom: 18px; }
   .signup-input-wrapper input { font-size: 13px; padding: 12px 40px 12px 14px; }
+  .coupon-modal { padding: 30px 20px; }
+  .coupon-display { padding: 16px; }
 }
 
 /* ===================== CART DRAWER ===================== */
