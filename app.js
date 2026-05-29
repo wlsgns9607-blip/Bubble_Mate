@@ -235,25 +235,22 @@ function buildCategories() {
       <span class="category-label">${cat.label}</span>
     `;
     li.addEventListener("click", () => {
-      // Remove active classes from navigation links
-      $$(".nav-link").forEach(link => link.classList.remove("active"));
-      
-      // Toggle category item active state
-      $$(".category-item").forEach(item => item.classList.remove("active"));
-      li.classList.add("active");
-
-      // Filter products
       if (cat.label === "전체보기") {
+        // Remove active classes from navigation links
+        $$(".nav-link").forEach(link => link.classList.remove("active"));
+        const firstNavLink = $(".nav-link");
+        if (firstNavLink) firstNavLink.classList.add("active");
+        
+        // Toggle category item active state
+        $$(".category-item").forEach(item => item.classList.remove("active"));
+        li.classList.add("active");
+
         buildProducts(PRODUCTS);
         $(".section-title").textContent = "실시간 인기 랭킹 상품 🔥";
+        $(".ranking").scrollIntoView({ behavior: "smooth" });
       } else {
-        const filtered = PRODUCTS.filter(p => p.category === cat.label);
-        buildProducts(filtered);
-        $(".section-title").textContent = `인기 상품 - ${cat.label} 📦`;
+        alert("카테고리 상품 준비 중입니다.");
       }
-      
-      // Smooth scroll to the products grid
-      $(".ranking").scrollIntoView({ behavior: "smooth" });
     });
     list.appendChild(li);
   });
