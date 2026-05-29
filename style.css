@@ -1385,7 +1385,7 @@ img:not([src]), img[src=""] {
   border-radius: 999px;
   font-size: 14px;
   font-weight: 500;
-  z-index: 300;
+  z-index: 2000;
   opacity: 0;
   transition: all .3s;
   box-shadow: var(--shadow-lg);
@@ -1840,6 +1840,7 @@ img:not([src]), img[src=""] {
   .step { flex-direction: column; gap: 8px; align-items: flex-start; }
   .step-num { width: 36px; height: 36px; font-size: 14px; }
   .step-card { padding: 14px 16px; width: 100%; }
+  .toast { bottom: 90px; }
 }
 
 /* ===================== CART DRAWER ===================== */
