@@ -666,7 +666,12 @@ img:not([src]), img[src=""] {
 }
 .wish-btn.on svg { fill: var(--red); stroke: var(--red); }
 
-.product-body { padding: 16px 16px 18px; }
+.product-body {
+  padding: 16px 16px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 .product-brand {
   font-family: var(--font-en);
   font-size: 11px;
@@ -688,6 +693,7 @@ img:not([src]), img[src=""] {
   align-items: baseline;
   gap: 8px;
   margin-bottom: 10px;
+  margin-top: auto;
 }
 .product-discount {
   font-size: 17px;
@@ -1715,6 +1721,7 @@ img:not([src]), img[src=""] {
   .hero-title { font-size: 32px; }
   .hero-content { padding: 0 36px; }
   .review-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .review-section { padding-bottom: 120px; }
   
   .business-banner::before { height: 300px; }
   .business-banner-content { height: 300px; padding: 0 40px; }
@@ -1727,12 +1734,20 @@ img:not([src]), img[src=""] {
   .login-btn { padding: 0 14px; font-size: 13px; height: 34px; margin-left: 4px; }
   .icon-btn { width: 34px; height: 34px; }
   
+  #userProfile { gap: 4px !important; }
+  #userProfile span { font-size: 12px !important; }
+  #userProfile button { padding: 4px 8px !important; font-size: 11px !important; }
+
   .category-list { flex-wrap: wrap; gap: 18px 0; }
   .category-item { flex: 0 0 33.333%; }
+  
+  .section-head { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 18px; }
+  .section-title { font-size: 20px; }
+  .section-sub { font-size: 12px; margin-top: 4px; }
+  .see-all { font-size: 13px; align-self: flex-end; }
+
   .product-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
   .feature-grid { grid-template-columns: 1fr; }
-  .review-grid { grid-template-columns: 1fr; gap: 16px; }
-  .review-head { flex-wrap: wrap; gap: 12px; }
   
   .event-section { padding: 0 16px; margin-top: 36px; }
   .event-track { gap: 16px; }
@@ -1752,8 +1767,18 @@ img:not([src]), img[src=""] {
   .promo-purple { border-radius: var(--radius); }
   .promo-green { border-radius: var(--radius); }
   
+  .review-section { padding: 40px 16px 80px; }
+  .review-grid { grid-template-columns: 1fr; gap: 16px; }
+  .review-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .review-title { font-size: 26px; }
+  .review-sub { font-size: 14px; font-weight: 500; }
+  .review-write { margin-left: 0; margin-top: 8px; align-self: flex-start; }
+
   .tab-btn { font-size: 14px; padding: 12px 0; }
   .detail-tabs { margin-top: 24px; margin-bottom: 20px; }
+  .long-detail-img-mock { height: 300px; padding: 20px; }
+  .long-detail-img-mock p { font-size: 16px; }
+  .long-detail-img-mock span { font-size: 12px; }
   
   .footer-inner { grid-template-columns: 1fr; padding: 40px 16px 24px; }
   .hero-track { height: 340px; }
@@ -1783,9 +1808,9 @@ img:not([src]), img[src=""] {
   }
   
   /* 모달창 모바일 최적화 */
-  .login-modal { width: 92%; }
+  .login-modal { width: 92%; top: 10%; transform: translateX(-50%); }
   .login-body { padding: 24px 20px; }
-  .signup-modal { width: 96%; max-height: 95vh; }
+  .signup-modal { width: 96%; top: 5%; transform: translateX(-50%); max-height: 90vh; }
   .signup-body { padding: 20px 16px; }
   .signup-hero { padding: 18px 0; border-radius: 20px; margin-bottom: 18px; }
   .signup-input-wrapper input { font-size: 13px; padding: 12px 40px 12px 14px; }
