@@ -5,7 +5,7 @@
    이미지는 src를 비워두고 alt에 안내문을 적어둠 → 사진만 갈아끼우면 됨.
    ========================================================= */
 
-const PRODUCTS = [
+const DEFAULT_PRODUCTS = [
   {
     id: "bubble-bomb",
     brand: "GLOSS BRO",
@@ -395,3 +395,20 @@ const HERO_SLIDES = [
     src: "img_001/Porsche.png"
   }
 ];
+
+let PRODUCTS = [];
+try {
+  const stored = localStorage.getItem("bubble_products");
+  if (stored) {
+    PRODUCTS = JSON.parse(stored);
+  } else {
+    PRODUCTS = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+    localStorage.setItem("bubble_products", JSON.stringify(PRODUCTS));
+  }
+} catch(e) {
+  PRODUCTS = DEFAULT_PRODUCTS;
+}
+
+window.saveProducts = function() {
+  localStorage.setItem("bubble_products", JSON.stringify(PRODUCTS));
+};

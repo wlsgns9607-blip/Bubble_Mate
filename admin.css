@@ -272,3 +272,88 @@ body {
 @media (max-width: 1024px) {
   .stat-cards { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* Admin Buttons & Inputs */
+.btn-primary {
+  background: var(--admin-primary);
+  color: var(--white);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-primary:hover { opacity: 0.9; }
+
+.btn-secondary {
+  background: var(--admin-light);
+  color: var(--admin-text);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-secondary:hover { background: var(--admin-gray); color: var(--white); }
+
+.btn-danger {
+  background: #ef4444;
+  color: var(--white);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-danger:hover { opacity: 0.9; }
+
+.btn-edit {
+  background: var(--admin-light);
+  color: var(--admin-text);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-edit:hover { background: #cbd5e1; }
+
+.product-management-content {
+  padding: 32px;
+}
+
+/* Modal */
+.admin-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,31,61,0.5);
+  display: grid; place-items: center;
+  z-index: 1000;
+}
+.admin-modal {
+  background: var(--white);
+  width: 90%; max-width: 480px;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+}
+.admin-modal h3 {
+  margin-bottom: 20px; font-size: 20px;
+}
+.admin-input-group {
+  margin-bottom: 16px;
+}
+.admin-input-group label {
+  display: block; font-size: 13px; font-weight: 600; color: var(--admin-gray); margin-bottom: 6px;
+}
+.admin-input-group input {
+  width: 100%; padding: 10px; border: 1px solid var(--admin-light); border-radius: 6px; outline: none; font-size: 14px;
+}
+.admin-input-group input:focus {
+  border-color: var(--admin-primary);
+}
+.admin-modal-actions {
+  display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;
+}
+.prod-img-preview {
+  width: 40px; height: 40px; border-radius: 6px; object-fit: cover; background: #eee;
+}
