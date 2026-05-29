@@ -740,34 +740,32 @@ function bindGlobal() {
     link.addEventListener("click", (e) => {
       e.preventDefault();
       
-      $$(".nav-link").forEach(l => l.classList.remove("active"));
-      link.classList.add("active");
-
-      // Reset category selection visual
-      $$(".category-item").forEach(item => item.classList.remove("active"));
-
       const categoryName = link.textContent.trim();
       if (categoryName === "전체 상품") {
+        $$(".nav-link").forEach(l => l.classList.remove("active"));
+        link.classList.add("active");
+
+        // Reset category selection visual
+        $$(".category-item").forEach(item => item.classList.remove("active"));
+
         buildProducts(PRODUCTS);
         $(".section-title").textContent = "실시간 인기 랭킹 상품 🔥";
-      } else {
-        const filtered = PRODUCTS.filter(p => p.tags && p.tags.includes(categoryName));
-        buildProducts(filtered);
-        $(".section-title").textContent = `인기 상품 - ${categoryName} ✨`;
-      }
-      
-      // Search input reset
-      const searchInput = $("#searchInput");
-      if (searchInput) searchInput.value = "";
-      
-      // If we are on detail page, return to home view first
-      if (!$("#detailView").hidden) {
-        $("#detailView").hidden = true;
-        $("#homeView").hidden = false;
-        closeOptionSheet();
-      }
+        
+        // Search input reset
+        const searchInput = $("#searchInput");
+        if (searchInput) searchInput.value = "";
+        
+        // If we are on detail page, return to home view first
+        if (!$("#detailView").hidden) {
+          $("#detailView").hidden = true;
+          $("#homeView").hidden = false;
+          closeOptionSheet();
+        }
 
-      $(".ranking").scrollIntoView({ behavior: "smooth" });
+        $(".ranking").scrollIntoView({ behavior: "smooth" });
+      } else {
+        alert("카테고리 상품 준비 중입니다.");
+      }
     });
   });
 
