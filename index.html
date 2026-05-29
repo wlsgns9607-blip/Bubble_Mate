@@ -278,6 +278,26 @@
   <!-- ===================== DETAIL VIEW (상세) ===================== -->
   <main id="detailView" hidden>
 
+    <!-- 스켈레톤 로딩 UI -->
+    <div class="skeleton-view" id="skeletonView" hidden>
+      <div class="skeleton-left">
+        <div class="skeleton-box skeleton-main-img"></div>
+        <div class="skeleton-thumbs">
+          <div class="skeleton-box skeleton-thumb"></div>
+          <div class="skeleton-box skeleton-thumb"></div>
+          <div class="skeleton-box skeleton-thumb"></div>
+        </div>
+      </div>
+      <div class="skeleton-right">
+        <div class="skeleton-box skeleton-text-lg"></div>
+        <div class="skeleton-box skeleton-text-sm" style="margin-top:12px;"></div>
+        <div class="skeleton-box skeleton-text-sm"></div>
+        <div class="skeleton-box skeleton-text-btn"></div>
+      </div>
+    </div>
+
+    <div id="realDetailContent">
+
     <!-- ---------- 상품 상단 (갤러리 + 구매패널) ---------- -->
     <section class="detail-top">
       <div class="detail-top-inner">
@@ -418,6 +438,8 @@
         <button class="sticky-btn" id="stickyBuyBtn">구매하기</button>
       </div>
     </div>
+
+    </div> <!-- end of realDetailContent -->
 
     <!-- ---------- 푸터 (상세용, 뉴스레터 포함) ---------- -->
     <footer class="site-footer">

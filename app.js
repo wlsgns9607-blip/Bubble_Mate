@@ -338,12 +338,30 @@ function openDetail(productId) {
   if (!p) return;
   currentProduct = p;
   detailQty = 1;
-  renderDetail(p);
-  recordRecentView(productId);
 
   $("#homeView").hidden = true;
   $("#detailView").hidden = false;
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+
+  // 스켈레톤 UI 노출
+  const skeletonView = $("#skeletonView");
+  const realContent = $("#realDetailContent");
+  if (skeletonView && realContent) {
+    skeletonView.hidden = false;
+    realContent.hidden = true;
+  }
+
+  // 비동기 데이터 통신을 가장한 로딩 딜레이 (0.6초)
+  setTimeout(() => {
+    renderDetail(p);
+    recordRecentView(productId);
+    
+    if (skeletonView && realContent) {
+      skeletonView.hidden = true;
+      realContent.hidden = false;
+    }
+  }, 600);
+
   // 주소 해시로 뒤로가기 지원
   history.pushState({ view: "detail", id: productId }, "", "#product=" + productId);
 }
@@ -362,6 +380,28 @@ function renderDetail(p) {
   const mainWrap = $("#galleryMain");
   mainWrap.innerHTML = "";
   mainWrap.appendChild(phImage(p.mainAlt, "", p.mainSrc));
+
+  // 마우스 호버 시 돋보기 효과 이벤트 바인딩
+  mainWrap.addEventListener("mousemove", (e) => {
+    const rect = mainWrap.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    // 백분율로 환산 (transform-origin 설정용)
+    const xPercent = (x / rect.width) * 100;
+    const yPercent = (y / rect.height) * 100;
+    
+    const img = mainWrap.querySelector("img");
+    if (img) {
+      mainWrap.classList.add("zooming");
+      img.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+    }
+  });
+
+  mainWrap.addEventListener("mouseleave", () => {
+    mainWrap.classList.remove("zooming");
+    const img = mainWrap.querySelector("img");
+    if (img) img.style.transformOrigin = "center center";
+  });
 
   // 썸네일
   const thumbs = $("#galleryThumbs");
