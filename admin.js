@@ -36,11 +36,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const pPrice = document.getElementById("pPrice");
   const pDiscount = document.getElementById("pDiscount");
   const pSrc = document.getElementById("pSrc");
+  const pFile = document.getElementById("pFile");
+  const imgPreview = document.getElementById("imgPreview");
   const modalSave = document.getElementById("modalSave");
   const modalCancel = document.getElementById("modalCancel");
   const addBtn = document.getElementById("addBtn");
 
   let editingId = null;
+
+  pFile.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64String = event.target.result;
+      pSrc.value = base64String;
+      imgPreview.src = base64String;
+      imgPreview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  });
 
   function renderProductTable() {
     tbody.innerHTML = "";
@@ -97,6 +113,15 @@ document.addEventListener("DOMContentLoaded", () => {
         pPrice.value = p.price;
         pDiscount.value = p.discount;
         pSrc.value = p.mainSrc || "";
+        
+        if (p.mainSrc) {
+          imgPreview.src = p.mainSrc;
+          imgPreview.style.display = "block";
+        } else {
+          imgPreview.src = "";
+          imgPreview.style.display = "none";
+        }
+        pFile.value = "";
       }
     } else {
       modalTitle.textContent = "새 상품 추가";
@@ -105,6 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
       pPrice.value = "";
       pDiscount.value = "0";
       pSrc.value = "";
+      imgPreview.src = "";
+      imgPreview.style.display = "none";
+      pFile.value = "";
     }
     modalOverlay.hidden = false;
   }

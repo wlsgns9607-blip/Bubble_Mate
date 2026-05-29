@@ -212,8 +212,12 @@
         </div>
       </div>
       <div class="admin-input-group">
-        <label>메인 이미지 URL</label>
-        <input type="text" id="pSrc" placeholder="img_001/...">
+        <label>메인 이미지</label>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <img id="imgPreview" class="prod-img-preview" style="width:50px; height:50px; display:none; border:1px solid #e2e8f0; border-radius:6px; object-fit:cover;">
+          <input type="file" id="pFile" accept="image/*" style="border:none; padding:0;">
+        </div>
+        <input type="hidden" id="pSrc">
       </div>
       <div class="admin-modal-actions">
         <button class="btn-secondary" id="modalCancel">취소</button>
