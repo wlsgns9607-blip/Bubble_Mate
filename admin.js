@@ -260,6 +260,78 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 초기 대시보드 렌더링
-  renderDashboard();
+  // ==========================================
+  // 관리자 로그인 보호 로직
+  // ==========================================
+  const adminLoginOverlay = document.getElementById("adminLoginOverlay");
+  const adminContainer = document.querySelector(".admin-container");
+  const adminIdInput = document.getElementById("adminId");
+  const adminPwInput = document.getElementById("adminPw");
+  const adminLoginSubmit = document.getElementById("adminLoginSubmit");
+  const adminLoginCancel = document.getElementById("adminLoginCancel");
+  const adminLogout = document.getElementById("adminLogout");
+
+  function checkAdminAuth() {
+    const isLogged = sessionStorage.getItem("admin_logged_in") === "true";
+    if (isLogged) {
+      if (adminLoginOverlay) adminLoginOverlay.style.display = "none";
+      if (adminContainer) adminContainer.style.display = "flex";
+    } else {
+      if (adminLoginOverlay) adminLoginOverlay.style.display = "flex";
+      if (adminContainer) adminContainer.style.display = "none";
+    }
+  }
+
+  // 초기 권한 확인
+  checkAdminAuth();
+
+  if (adminLoginSubmit) {
+    adminLoginSubmit.addEventListener("click", performAdminLogin);
+  }
+
+  // 엔터 키 누를 때 로그인
+  [adminIdInput, adminPwInput].forEach(input => {
+    if (input) {
+      input.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") performAdminLogin();
+      });
+    }
+  });
+
+  function performAdminLogin() {
+    const id = adminIdInput.value.trim();
+    const pw = adminPwInput.value.trim();
+
+    if (id === "admin" && pw === "1234") {
+      sessionStorage.setItem("admin_logged_in", "true");
+      checkAdminAuth();
+      // 로그인 성공 시 대시보드 데이터 다시 로드 및 차트 크기 재조정
+      renderDashboard();
+    } else {
+      alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+      adminPwInput.value = "";
+      adminPwInput.focus();
+    }
+  }
+
+  if (adminLoginCancel) {
+    adminLoginCancel.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  }
+
+  if (adminLogout) {
+    adminLogout.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (confirm("로그아웃 하시겠습니까?")) {
+        sessionStorage.removeItem("admin_logged_in");
+        window.location.href = "index.html";
+      }
+    });
+  }
+
+  // 초기 대시보드 렌더링 (로그인된 상태일 때만 의미있음)
+  if (sessionStorage.getItem("admin_logged_in") === "true") {
+    renderDashboard();
+  }
 });
