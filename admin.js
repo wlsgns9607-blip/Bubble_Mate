@@ -290,27 +290,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 엔터 키 누를 때 로그인
-  [adminIdInput, adminPwInput].forEach(input => {
-    if (input) {
-      input.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") performAdminLogin();
-      });
-    }
-  });
+  if (adminIdInput) {
+    adminIdInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") performAdminLogin();
+    });
+  }
 
   function performAdminLogin() {
     const id = adminIdInput.value.trim();
-    const pw = adminPwInput.value.trim();
 
-    if (id === "admin" && pw === "1234") {
+    if (id === "gsl05137") {
       sessionStorage.setItem("admin_logged_in", "true");
       checkAdminAuth();
       // 로그인 성공 시 대시보드 데이터 다시 로드 및 차트 크기 재조정
       renderDashboard();
     } else {
-      alert("아이디 또는 비밀번호가 올바르지 않습니다.");
-      adminPwInput.value = "";
-      adminPwInput.focus();
+      alert("관리자만 들어갈 수 있습니다.");
+      adminIdInput.value = "";
+      adminIdInput.focus();
     }
   }
 
