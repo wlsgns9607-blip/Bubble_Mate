@@ -599,7 +599,7 @@ function bindOptionSheet() {
         orderId: orderId,
         orderName: orderName,
         customerName: '테스트고객',
-        successUrl: window.location.origin + window.location.pathname + '?success=true',
+        successUrl: window.location.origin + window.location.pathname + '?success=true&amount=' + amount + '&orderName=' + encodeURIComponent(orderName),
         failUrl: window.location.origin + window.location.pathname + '?fail=true',
       }).catch(function (error) {
         if (error.code === 'USER_CANCEL') {
@@ -929,6 +929,28 @@ function init() {
   // 주소에 #product=... 있으면 해당 상세로 바로 진입
   const m = location.hash.match(/product=([\w-]+)/);
   if (m) openDetailNoPush(m[1]);
+
+  // 결제 완료 처리
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("success") === "true") {
+    const amount = parseInt(params.get("amount") || "0");
+    const orderName = params.get("orderName") || "주문상품";
+    const orderId = params.get("orderId") || "ORD-" + Math.floor(Math.random()*10000);
+    
+    const orders = JSON.parse(localStorage.getItem("bubble_orders") || "[]");
+    orders.unshift({
+      orderId: orderId,
+      customerName: "테스트고객",
+      orderName: orderName,
+      date: new Date().toISOString().slice(0, 10).replace(/-/g, "."),
+      amount: amount,
+      status: "배송 준비"
+    });
+    localStorage.setItem("bubble_orders", JSON.stringify(orders));
+
+    setTimeout(() => showToast("결제가 완료되었습니다! 어드민에서 확인해보세요."), 500);
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", init);

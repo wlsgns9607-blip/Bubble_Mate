@@ -181,4 +181,85 @@ document.addEventListener("DOMContentLoaded", () => {
     modalOverlay.hidden = true;
     renderProductTable();
   });
+
+  // ==========================================
+  // 대시보드 통계 & 차트 렌더링
+  // ==========================================
+  function renderDashboard() {
+    const orders = JSON.parse(localStorage.getItem("bubble_orders") || "[]");
+    
+    // 1. 통계 업데이트
+    const totalSales = orders.reduce((sum, order) => sum + (order.amount || 0), 0);
+    document.getElementById("dashSales").textContent = "₩ " + totalSales.toLocaleString();
+    document.getElementById("dashOrders").textContent = orders.length + " 건";
+
+    // 2. 최근 주문 내역 업데이트
+    const dashOrderTable = document.getElementById("dashOrderTable");
+    dashOrderTable.innerHTML = "";
+    if (orders.length === 0) {
+      dashOrderTable.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px;">최근 주문 내역이 없습니다.</td></tr>`;
+    } else {
+      orders.slice(0, 5).forEach(order => {
+        let statusClass = "st-ready";
+        if (order.status === "배송 중") statusClass = "st-ing";
+        if (order.status === "배송 완료") statusClass = "st-done";
+        
+        dashOrderTable.innerHTML += `
+          <tr>
+            <td>${order.orderId}</td>
+            <td>${order.customerName}</td>
+            <td>${order.orderName}</td>
+            <td>${order.date}</td>
+            <td>₩ ${order.amount.toLocaleString()}</td>
+            <td><span class="status ${statusClass}">${order.status}</span></td>
+          </tr>
+        `;
+      });
+    }
+
+    // 3. 차트 렌더링 (Chart.js)
+    const ctx = document.getElementById('salesChart');
+    if (!ctx) return;
+    
+    // 가짜 7일치 날짜 데이터 생성
+    const labels = [];
+    const data = [120000, 190000, 150000, 220000, 180000, 310000];
+    for (let i = 6; i >= 1; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      labels.push(d.toISOString().slice(5, 10).replace('-', '/'));
+    }
+    // 오늘 매출 (실제 orders 데이터 반영)
+    labels.push("오늘");
+    data.push(totalSales || 50000);
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '일별 매출 추이 (원)',
+          data: data,
+          borderColor: '#3b82f6',
+          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  }
+
+  // 초기 대시보드 렌더링
+  renderDashboard();
 });

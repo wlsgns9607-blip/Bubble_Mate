@@ -75,7 +75,7 @@
             </div>
             <div class="stat-info">
               <p>오늘 매출</p>
-              <h3>₩ 2,450,000</h3>
+              <h3 id="dashSales">₩ 0</h3>
             </div>
           </div>
           <div class="stat-card">
@@ -84,7 +84,7 @@
             </div>
             <div class="stat-info">
               <p>신규 주문</p>
-              <h3>124 건</h3>
+              <h3 id="dashOrders">0 건</h3>
             </div>
           </div>
           <div class="stat-card">
@@ -121,41 +121,17 @@
                   <th>상태</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>#ORD-8941</td>
-                  <td>김철수</td>
-                  <td>노터치 버그클리너 외 2건</td>
-                  <td>2024.10.15</td>
-                  <td>₩ 35,000</td>
-                  <td><span class="status st-ready">배송 준비</span></td>
-                </tr>
-                <tr>
-                  <td>#ORD-8940</td>
-                  <td>이영희</td>
-                  <td>퍼펙트 실내클리너 1+1</td>
-                  <td>2024.10.15</td>
-                  <td>₩ 16,200</td>
-                  <td><span class="status st-done">배송 완료</span></td>
-                </tr>
-                <tr>
-                  <td>#ORD-8939</td>
-                  <td>박민수</td>
-                  <td>버킷+ 완벽발수 Tige왁스 세트</td>
-                  <td>2024.10.14</td>
-                  <td>₩ 29,800</td>
-                  <td><span class="status st-ing">배송 중</span></td>
-                </tr>
-                <tr>
-                  <td>#ORD-8938</td>
-                  <td>정수아</td>
-                  <td>세차타월 (S) 30장 SET</td>
-                  <td>2024.10.14</td>
-                  <td>₩ 4,500</td>
-                  <td><span class="status st-done">배송 완료</span></td>
-                </tr>
+              <tbody id="dashOrderTable">
+                <!-- JS가 채움 -->
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <div class="recent-orders" style="margin-top: 24px;">
+          <h2>주간 매출 통계 (데이터 시각화)</h2>
+          <div style="background:var(--white); padding:16px; border-radius:12px; height: 350px;">
+            <canvas id="salesChart"></canvas>
           </div>
         </div>
         </div>
@@ -226,6 +202,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="products.js"></script>
   <script src="admin.js"></script>
 </body>
