@@ -1003,6 +1003,10 @@ function bindGlobal() {
   if (couponConfirmBtn) {
     couponConfirmBtn.addEventListener("click", closeCouponModal);
   }
+  const couponCloseBtn = $("#couponCloseBtn");
+  if (couponCloseBtn) {
+    couponCloseBtn.addEventListener("click", closeCouponModal);
+  }
   const couponModalOverlay = $("#couponModalOverlay");
   if (couponModalOverlay) {
     couponModalOverlay.addEventListener("click", closeCouponModal);

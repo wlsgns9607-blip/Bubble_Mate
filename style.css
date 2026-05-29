@@ -2108,3 +2108,33 @@ img:not([src]), img[src=""] {
     transform: translate(calc(-50% + var(--drift-x)), calc(-50% + var(--drift-y))) scale(1.2);
   }
 }
+
+/* 쿠폰 모달 닫기 버튼 */
+.coupon-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: var(--gray-500);
+  transition: color 0.15s, background-color 0.15s;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.coupon-modal-close:hover {
+  color: var(--ink);
+  background-color: var(--gray-100);
+}
+.coupon-modal-close svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
