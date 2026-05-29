@@ -739,13 +739,39 @@ function bindGlobal() {
   const cartOverlay = $("#cartOverlay");
   if (cartOverlay) cartOverlay.addEventListener("click", closeCartDrawer);
   const cartCheckoutBtn = $("#cartCheckoutBtn");
-  if (cartCheckoutBtn) cartCheckoutBtn.addEventListener("click", () => {
-    if (getCart().length === 0) {
-      alert("장바구니가 비어 있습니다.");
-      return;
-    }
-    alert("결제 페이지로 이동합니다. (포트폴리오 데모용)");
-  });
+  if (cartCheckoutBtn) {
+    cartCheckoutBtn.addEventListener("click", () => {
+      const cart = getCart();
+      if (cart.length === 0) {
+        alert("장바구니가 비어 있습니다.");
+        return;
+      }
+      
+      const amount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const orderName = cart[0].name + (cart.length > 1 ? ` 외 ${cart.length - 1}건` : "");
+      const orderId = "cart_" + new Date().getTime() + "_" + Math.floor(Math.random() * 1000);
+
+      closeCartDrawer();
+      
+      try {
+        const tossPayments = TossPayments("test_ck_Z1aOwX7K8mEZMmB0obdj8yQxzvNP");
+        tossPayments.requestPayment('카드', {
+          amount: amount,
+          orderId: orderId,
+          orderName: orderName,
+          customerName: '테스트고객',
+          successUrl: window.location.origin + window.location.pathname + '?success=true&amount=' + amount + '&orderName=' + encodeURIComponent(orderName),
+          failUrl: window.location.origin + window.location.pathname + '?fail=true',
+        }).catch(function (error) {
+          if (error.code === 'USER_CANCEL') showToast('결제가 취소되었습니다.');
+          else showToast('결제 중 오류가 발생했습니다.');
+        });
+      } catch (e) {
+        console.error(e);
+        showToast('결제 모듈 로드 중 오류가 발생했습니다.');
+      }
+    });
+  }
 
   // 로그인 모달 이벤트
   const loginBtn = $("#headerLoginBtn") || $(".login-btn");
