@@ -1,6 +1,6 @@
 # 🫧 Bubble Mate (버블메이트) - 프리미엄 세차 용품 쇼핑몰
 
-![Bubble Mate Banner](https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=1200&q=80)
+![Bubble Mate Banner](img_001/aston_martin.png)
 
 > **Bubble Mate**는 디테일링 세차 전문가와 세차 애호가를 위한 프리미엄 카케어(Car Care) 용품 전문 온라인 쇼핑몰입니다. 
 > 바닐라 자바스크립트(Vanilla JS)만으로 현대적인 프론트엔드 UI/UX를 구현하였으며, Toss Payments 연동을 통해 실제 결제 프로세스를 경험할 수 있는 실무 지향형 포트폴리오 프로젝트입니다.

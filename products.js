@@ -16,6 +16,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 1240,
     mainAlt: "여기에 버블밤 고농축 폼클리너 제품 사진 넣으세요",
     mainSrc: "img_001/Highly_Concentrated.png",
+    category: "카샴푸",
+    tags: ["외부 세차"],
     thumbs: [
       "여기에 버블밤 폼클리너 정면 사진 넣으세요",
       "여기에 폼클리너 거품 분사 장면 사진 넣으세요",
@@ -42,6 +44,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 3520,
     mainAlt: "여기에 슈퍼리치 드라이잉 타월 제품 사진 넣으세요",
     mainSrc: "img_001/Towel.png",
+    category: "세차타월",
+    tags: ["외부 세차"],
     thumbs: [
       "여기에 드라이잉 타월 접힌 모습 사진 넣으세요",
       "여기에 타월로 차량 물기 제거 장면 사진 넣으세요",
@@ -68,6 +72,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 890,
     mainAlt: "여기에 데드샷 휠클리너 제품 사진 넣으세요",
     mainSrc: "img_001/Wheel_cleaner.png",
+    category: "휠/타이어",
+    tags: ["외부 세차"],
     thumbs: [
       "여기에 휠클리너 스프레이 제품 사진 넣으세요",
       "여기에 휠 분진 제거 전후 비교 사진 넣으세요",
@@ -75,7 +81,7 @@ const DEFAULT_PRODUCTS = [
     ],
     tip: "분사 후 색이 보라색으로 변하는 것은 철분(브레이크 분진)과 반응하는 신호입니다. 색 변화가 멈추면 충분히 녹았다는 뜻이니 그때 헹궈주세요.",
     features: [
-      { title: "철분 반응 포뮬러", body: "고착된 브레이크 분진과 철분 오염에 반응해 녹이며 색으로 진행 상태를 보여줍니다." },
+      { title: "철분 반응 포뮬러", body: "고착된 브레이크 분진และ 철분 오염에 반응해 녹이며 색으로 진행 상태를 보여줍니다." },
       { title: "산성 프리 안전", body: "강산이 들어있지 않아 다양한 휠 코팅과 도금 휠에도 안전하게 사용할 수 있습니다." }
     ],
     steps: [
@@ -94,6 +100,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 1050,
     mainAlt: "여기에 인테리어 클리너 체리향 제품 사진 넣으세요",
     mainSrc: "img_001/Interior_cleaner.png",
+    category: "실내관리",
+    tags: ["내부 세차"],
     thumbs: [
       "여기에 인테리어 클리너 스프레이 사진 넣으세요",
       "여기에 대시보드 청소 장면 사진 넣으세요",
@@ -120,6 +128,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 2110,
     mainAlt: "여기에 디테일링 휠 브러쉬 세트 사진 넣으세요",
     mainSrc: "img_001/Wheel_brush.png",
+    category: "휠/타이어",
+    tags: ["전문가 도구"],
     thumbs: [
       "여기에 휠 브러쉬 세트 구성 사진 넣으세요",
       "여기에 휠 안쪽 세척 장면 사진 넣으세요",
@@ -146,6 +156,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 1205,
     mainAlt: "여기에 초고농축 퍼펙트 폼 카샴푸 제품 사진 넣으세요",
     mainSrc: "img_001/Ultra_Concentrated_Perfect_Car_Shampoo.png",
+    category: "카샴푸",
+    tags: ["외부 세차"],
     thumbs: [
       "여기에 퍼펙트 폼 카샴푸 제품 사진 넣으세요",
       "여기에 폼 카샴푸 거품 세차 장면 사진 넣으세요",
@@ -172,6 +184,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 820,
     mainAlt: "여기에 Water-repellent 물왁스 제품 사진 넣으세요",
     mainSrc: "img_001/Spray_wax.png",
+    category: "광택/코팅",
+    tags: ["외부 세차"],
     thumbs: [
       "여기에 물왁스 스프레이 제품 사진 넣으세요",
       "여기에 물왁스 발수 효과 사진 넣으세요",
@@ -198,6 +212,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 340,
     mainAlt: "여기에 유리발수 코팅제 제품 사진 넣으세요",
     mainSrc: "img_001/youlee.png",
+    category: "유리세정",
+    tags: ["외부 세차", "광택/코팅"],
     thumbs: [
       "여기에 유리발수 코팅제 제품 사진 넣으세요",
       "여기에 비오는 날 유리 발수 효과 사진 넣으세요",
@@ -224,6 +240,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 3120,
     mainAlt: "노터치 버그클리너 1+1 이벤트 이미지",
     mainSrc: "img_001/car_001.png",
+    category: "카샴푸",
+    tags: ["외부 세차", "세트 상품"],
     thumbs: [
       "노터치 버그클리너 상세 이미지 1",
       "노터치 버그클리너 상세 이미지 2"
@@ -249,6 +267,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 1540,
     mainAlt: "퍼펙트 실내클리너 1+1 이벤트 이미지",
     mainSrc: "img_001/410.png",
+    category: "실내관리",
+    tags: ["내부 세차", "세트 상품"],
     thumbs: [
       "퍼펙트 실내클리너 상세 이미지 1",
       "퍼펙트 실내클리너 상세 이미지 2"
@@ -274,6 +294,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 2050,
     mainAlt: "버킷, Tige왁스, 드라잉타월 SET 이벤트 이미지",
     mainSrc: "img_001/car_003.png",
+    category: "광택/코팅",
+    tags: ["세트 상품", "외부 세차"],
     thumbs: [
       "Tige왁스 세트 상세 이미지 1",
       "Tige왁스 세트 상세 이미지 2"
@@ -299,6 +321,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 1850,
     mainAlt: "세차타월 (S) 30장 SET 이벤트 이미지",
     mainSrc: "img_001/tower_002.png",
+    category: "세차타월",
+    tags: ["세트 상품", "외부 세차"],
     thumbs: [
       "세차타월 세트 상세 이미지 1",
       "세차타월 세트 상세 이미지 2"
@@ -324,6 +348,8 @@ const DEFAULT_PRODUCTS = [
     ratingCount: 2150,
     mainAlt: "알카리성 클리너 1L 1+1 이벤트 이미지",
     mainSrc: "img_001/car_004.png",
+    category: "카샴푸",
+    tags: ["외부 세차", "세트 상품"],
     thumbs: [
       "알카리성 클리너 상세 이미지 1",
       "알카리성 클리너 상세 이미지 2"
@@ -398,13 +424,9 @@ const HERO_SLIDES = [
 
 let PRODUCTS = [];
 try {
-  const stored = localStorage.getItem("bubble_products");
-  if (stored) {
-    PRODUCTS = JSON.parse(stored);
-  } else {
-    PRODUCTS = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-    localStorage.setItem("bubble_products", JSON.stringify(PRODUCTS));
-  }
+  // Always reload fresh defaults for portfolio update
+  PRODUCTS = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+  localStorage.setItem("bubble_products", JSON.stringify(PRODUCTS));
 } catch(e) {
   PRODUCTS = DEFAULT_PRODUCTS;
 }

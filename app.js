@@ -235,7 +235,25 @@ function buildCategories() {
       <span class="category-label">${cat.label}</span>
     `;
     li.addEventListener("click", () => {
-      alert("카테고리 상품 준비 중입니다.");
+      // Remove active classes from navigation links
+      $$(".nav-link").forEach(link => link.classList.remove("active"));
+      
+      // Toggle category item active state
+      $$(".category-item").forEach(item => item.classList.remove("active"));
+      li.classList.add("active");
+
+      // Filter products
+      if (cat.label === "전체보기") {
+        buildProducts(PRODUCTS);
+        $(".section-title").textContent = "실시간 인기 랭킹 상품 🔥";
+      } else {
+        const filtered = PRODUCTS.filter(p => p.category === cat.label);
+        buildProducts(filtered);
+        $(".section-title").textContent = `인기 상품 - ${cat.label} 📦`;
+      }
+      
+      // Smooth scroll to the products grid
+      $(".ranking").scrollIntoView({ behavior: "smooth" });
     });
     list.appendChild(li);
   });
@@ -244,11 +262,23 @@ function buildCategories() {
 /* =========================================================
    3) 인기상품 카드 8개 렌더링
    ========================================================= */
-function buildProducts() {
+function buildProducts(items = PRODUCTS) {
   const grid = $("#productGrid");
   grid.innerHTML = "";
 
-  PRODUCTS.slice(0, 8).forEach((p) => {
+  // Filter out products that are designed for hero slider (i.e. those with badge property) and event products
+  const displayItems = items.filter(p => !p.badge && !p.id.startsWith("event-"));
+
+  if (displayItems.length === 0) {
+    grid.innerHTML = `
+      <div class="no-products" style="grid-column: 1 / -1; text-align: center; padding: 60px 24px; color: var(--gray-500); width: 100%;">
+        <p style="font-size: 16px; font-weight: 500;">해당 카테고리의 상품이 준비 중입니다.</p>
+      </div>
+    `;
+    return;
+  }
+
+  displayItems.forEach((p) => {
     const card = document.createElement("article");
     card.className = "product-card";
 
@@ -370,6 +400,18 @@ function goHome() {
   $("#detailView").hidden = true;
   $("#homeView").hidden = false;
   closeOptionSheet();
+  
+  // Reset navigation & filtering states when returning home
+  $$(".nav-link").forEach(l => l.classList.remove("active"));
+  const firstNavLink = $(".nav-link");
+  if (firstNavLink) firstNavLink.classList.add("active");
+  $$(".category-item").forEach(item => item.classList.remove("active"));
+  buildProducts(PRODUCTS);
+  $(".section-title").textContent = "실시간 인기 랭킹 상품 🔥";
+  
+  const searchInput = $("#searchInput");
+  if (searchInput) searchInput.value = "";
+
   window.scrollTo({ top: 0 });
   if (location.hash) history.pushState({ view: "home" }, "", location.pathname);
 }
@@ -661,13 +703,74 @@ function bindGlobal() {
     });
   }
 
-  // 네비게이션 링크 클릭 시 알림
+  // 네비게이션 링크 클릭 시 필터링
   $$(".nav-link").forEach(link => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      alert("카테고리 상품 준비 중입니다.");
+      
+      $$(".nav-link").forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+
+      // Reset category selection visual
+      $$(".category-item").forEach(item => item.classList.remove("active"));
+
+      const categoryName = link.textContent.trim();
+      if (categoryName === "전체 상품") {
+        buildProducts(PRODUCTS);
+        $(".section-title").textContent = "실시간 인기 랭킹 상품 🔥";
+      } else {
+        const filtered = PRODUCTS.filter(p => p.tags && p.tags.includes(categoryName));
+        buildProducts(filtered);
+        $(".section-title").textContent = `인기 상품 - ${categoryName} ✨`;
+      }
+      
+      // Search input reset
+      const searchInput = $("#searchInput");
+      if (searchInput) searchInput.value = "";
+      
+      // If we are on detail page, return to home view first
+      if (!$("#detailView").hidden) {
+        $("#detailView").hidden = true;
+        $("#homeView").hidden = false;
+        closeOptionSheet();
+      }
+
+      $(".ranking").scrollIntoView({ behavior: "smooth" });
     });
   });
+
+  // 검색창 입력 이벤트 추가 (실시간 상품 검색)
+  const searchInput = $("#searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const keyword = e.target.value.toLowerCase().trim();
+      
+      // Reset active states for navigation and categories
+      $$(".nav-link").forEach(l => l.classList.remove("active"));
+      $$(".category-item").forEach(item => item.classList.remove("active"));
+
+      if (keyword === "") {
+        const firstNavLink = $(".nav-link");
+        if (firstNavLink) firstNavLink.classList.add("active");
+        buildProducts(PRODUCTS);
+        $(".section-title").textContent = "실시간 인기 랭킹 상품 🔥";
+      } else {
+        const filtered = PRODUCTS.filter(p => 
+          p.name.toLowerCase().includes(keyword) || 
+          p.brand.toLowerCase().includes(keyword) ||
+          (p.category && p.category.toLowerCase().includes(keyword))
+        );
+        buildProducts(filtered);
+        $(".section-title").textContent = `검색 결과 - "${keyword}" 🔍`;
+      }
+      
+      if (!$("#detailView").hidden) {
+        $("#detailView").hidden = true;
+        $("#homeView").hidden = false;
+        closeOptionSheet();
+      }
+    });
+  }
 
   // 버튼 공통 이벤트 (이벤트 위임)
   document.addEventListener("click", (e) => {
@@ -694,6 +797,7 @@ function bindGlobal() {
       closeOptionSheet();
       closeLoginModal();
       closeSignupModal();
+      closeCouponModal();
     }
   });
 
@@ -823,6 +927,50 @@ function bindGlobal() {
       openLoginModal();
     });
   }
+
+  // 회원가입 완료 및 쿠폰 발급 이벤트
+  const signupSubmitBtn = $(".signup-submit");
+  if (signupSubmitBtn) {
+    signupSubmitBtn.addEventListener("click", () => {
+      // Find the name input inside signup-modal
+      const nameInput = document.querySelector(".signup-form input[placeholder*='홍길동']");
+      const name = nameInput && nameInput.value.trim() ? nameInput.value.trim() : "신규회원";
+
+      // Close signup modal and overlay
+      closeSignupModal();
+      $("#loginOverlay").hidden = true;
+
+      // Simulate login
+      simulateLogin(name);
+
+      // Trigger Confetti!
+      try {
+        if (typeof confetti === "function") {
+          confetti({
+            particleCount: 150,
+            spread: 80,
+            origin: { y: 0.5 },
+            zIndex: 9999
+          });
+        }
+      } catch (err) {
+        console.error("Confetti error:", err);
+      }
+
+      // Show Coupon Modal
+      showCouponModal();
+    });
+  }
+
+  // 쿠폰 모달 닫기
+  const couponConfirmBtn = $("#couponConfirmBtn");
+  if (couponConfirmBtn) {
+    couponConfirmBtn.addEventListener("click", closeCouponModal);
+  }
+  const couponModalOverlay = $("#couponModalOverlay");
+  if (couponModalOverlay) {
+    couponModalOverlay.addEventListener("click", closeCouponModal);
+  }
 }
 
 function openLoginModal() {
@@ -842,6 +990,16 @@ function openSignupModal() {
 
 function closeSignupModal() {
   $("#signupModal").hidden = true;
+}
+
+function showCouponModal() {
+  $("#couponModalOverlay").hidden = false;
+  $("#couponModal").hidden = false;
+}
+
+function closeCouponModal() {
+  $("#couponModalOverlay").hidden = true;
+  $("#couponModal").hidden = true;
 }
 
 // 뒤로가기로 상세 복원할 때 (history push 없이)
