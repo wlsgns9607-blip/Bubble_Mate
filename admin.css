@@ -484,3 +484,72 @@ body {
 .login-actions .btn-login:active {
   transform: translateY(0);
 }
+
+/* Admin Mobile Responsiveness */
+@media (max-width: 768px) {
+  .admin-container {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .sidebar-header {
+    padding: 16px 20px;
+    text-align: center;
+  }
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: 6px;
+  }
+  .nav-item {
+    padding: 10px 12px;
+    font-size: 13px;
+    flex: 1 1 calc(50% - 6px);
+    justify-content: center;
+  }
+  .sidebar-footer {
+    flex-direction: row !important;
+    gap: 8px;
+    padding: 12px;
+  }
+  .sidebar-footer .nav-item {
+    flex: 1;
+    margin: 0;
+  }
+  .main-content {
+    overflow-y: visible;
+  }
+  .top-header {
+    padding: 16px;
+    flex-direction: column;
+    height: auto;
+    gap: 12px;
+  }
+  .header-search {
+    width: 100%;
+  }
+  .header-profile {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .dashboard-content, .product-management-content {
+    padding: 16px;
+  }
+  .stat-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .admin-modal {
+    width: 95%;
+    padding: 16px;
+  }
+  .table-wrap {
+    -webkit-overflow-scrolling: touch;
+  }
+}
