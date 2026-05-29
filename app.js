@@ -677,13 +677,48 @@ function showToast(msg) {
 /* =========================================================
    9) 전역 이벤트 바인딩
    ========================================================= */
+function createLogoBubbles(e) {
+  const logo = e.currentTarget;
+  const rect = logo.getBoundingClientRect();
+  for (let i = 0; i < 15; i++) {
+    const bubble = document.createElement("span");
+    bubble.className = "logo-bubble";
+    const size = Math.random() * 12 + 8;
+    bubble.style.width = `${size}px`;
+    bubble.style.height = `${size}px`;
+    
+    const x = e.clientX ? (e.clientX - rect.left) : (rect.width / 2);
+    const y = e.clientY ? (e.clientY - rect.top) : (rect.height / 2);
+    
+    bubble.style.left = `${x}px`;
+    bubble.style.top = `${y}px`;
+    
+    const driftX = (Math.random() - 0.5) * 80;
+    const driftY = -40 - Math.random() * 60;
+    bubble.style.setProperty("--drift-x", `${driftX}px`);
+    bubble.style.setProperty("--drift-y", `${driftY}px`);
+    
+    bubble.style.animationDuration = `${Math.random() * 0.5 + 0.7}s`;
+    
+    logo.appendChild(bubble);
+    
+    bubble.addEventListener("animationend", () => {
+      bubble.remove();
+    });
+  }
+}
+
 function bindGlobal() {
   // 히어로 화살표
   $("#heroPrev").addEventListener("click", prevHero);
   $("#heroNext").addEventListener("click", nextHero);
 
   // 로고 → 홈
-  $("#logoHome").addEventListener("click", (e) => { e.preventDefault(); goHome(); });
+  $("#logoHome").addEventListener("click", (e) => {
+    e.preventDefault();
+    createLogoBubbles(e);
+    goHome();
+  });
 
   // 선물상자 폭죽 이벤트
   const giftBox = $("#giftBox");
