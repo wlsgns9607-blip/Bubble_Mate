@@ -215,7 +215,7 @@
     <section class="promo-strip" aria-label="이벤트 안내">
       <div class="promo-card promo-purple" style="display: flex; align-items: center; justify-content: center; gap: 16px;">
         <span>메달 리뷰 작성시 선물이 <strong>펑펑</strong>!</span>
-        <div class="gift-box">🎁</div>
+        <div class="gift-box" id="giftBox" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" title="선물상자를 클릭해보세요!">🎁</div>
       </div>
       <div class="promo-card promo-green" style="display: flex; align-items: center; justify-content: center; gap: 20px;">
         <span>신규회원가입시 <strong>10,000원 할인쿠폰</strong> 제공!!</span>
@@ -652,6 +652,7 @@
   </div>
 
   <script src="https://js.tosspayments.com/v1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="products.js"></script>
   <script src="app.js"></script>
 </body>

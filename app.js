@@ -643,6 +643,24 @@ function bindGlobal() {
   // 로고 → 홈
   $("#logoHome").addEventListener("click", (e) => { e.preventDefault(); goHome(); });
 
+  // 선물상자 폭죽 이벤트
+  const giftBox = $("#giftBox");
+  if (giftBox) {
+    giftBox.addEventListener("click", () => {
+      const rect = giftBox.getBoundingClientRect();
+      const x = (rect.left + rect.width / 2) / window.innerWidth;
+      const y = (rect.top + rect.height / 2) / window.innerHeight;
+      if (typeof confetti === "function") {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { x, y },
+          zIndex: 9999
+        });
+      }
+    });
+  }
+
   // 네비게이션 링크 클릭 시 알림
   $$(".nav-link").forEach(link => {
     link.addEventListener("click", (e) => {
