@@ -406,6 +406,12 @@ function renderDetail(p) {
   const origin = Math.round(p.price / (1 - p.discount / 100));
   $("#detailOrigin").textContent = origin.toLocaleString() + " KRW";
 
+  // 스티키 바 업데이트
+  const stickyName = $("#stickyName");
+  const stickyPrice = $("#stickyPrice");
+  if (stickyName) stickyName.textContent = p.name;
+  if (stickyPrice) stickyPrice.textContent = p.price.toLocaleString() + " KRW";
+
   $("#detailTip").textContent = p.tip;
 
   // 수량 리셋
@@ -630,6 +636,40 @@ function bindGlobal() {
       closeOptionSheet();
       closeLoginModal();
       closeSignupModal();
+    }
+  });
+
+  // 탭 스위칭 로직
+  $$(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      $$(".tab-btn").forEach(b => b.classList.remove("active"));
+      $$(".tab-content").forEach(c => c.classList.remove("active"));
+      
+      btn.classList.add("active");
+      const targetId = btn.getAttribute("data-tab");
+      const targetContent = $("#" + targetId);
+      if (targetContent) targetContent.classList.add("active");
+    });
+  });
+
+  // 스티키 바 버튼
+  const stickyBuyBtn = $("#stickyBuyBtn");
+  if (stickyBuyBtn) {
+    stickyBuyBtn.addEventListener("click", () => {
+      openOptionSheet();
+    });
+  }
+
+  // 스크롤 이벤트 (스티키 바 표시/숨김)
+  window.addEventListener("scroll", () => {
+    const detailView = $("#detailView");
+    const stickyBar = $(".sticky-buy-bar");
+    if (!detailView.hidden && stickyBar) {
+      if (window.scrollY > 300) {
+        stickyBar.classList.add("show");
+      } else {
+        stickyBar.classList.remove("show");
+      }
     }
   });
 

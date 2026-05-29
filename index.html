@@ -339,21 +339,85 @@
       </div>
     </section>
 
-    <!-- ---------- 주요 특징 + 사용 방법 ---------- -->
-    <section class="detail-info">
-      <div class="detail-info-inner">
+    <!-- ---------- 탭 및 상세 콘텐츠 ---------- -->
+    <section class="detail-content-section">
+      <div class="detail-tabs">
+        <button class="tab-btn active" data-tab="tab-detail">상세정보</button>
+        <button class="tab-btn" data-tab="tab-review">리뷰(12)</button>
+        <button class="tab-btn" data-tab="tab-qna">Q&A</button>
+        <button class="tab-btn" data-tab="tab-policy">반품/교환</button>
+      </div>
 
-        <h2 class="info-title">주요 특징</h2>
-        <div class="feature-grid" id="featureGrid">
-          <!-- JS가 특징 2개를 채움 -->
+      <div class="tab-content active" id="tab-detail">
+        <div class="detail-info-inner">
+          <div class="long-detail-img-mock">
+            <p>상품 상세 설명 (Long Image Mockup)</p>
+            <span>이곳에 보통 아주 긴 세로형 상품 어필 이미지가 들어갑니다.</span>
+          </div>
+          <h2 class="info-title" style="margin-top:40px;">주요 특징</h2>
+          <div class="feature-grid" id="featureGrid">
+            <!-- JS가 특징 2개를 채움 -->
+          </div>
+
+          <h2 class="info-title" style="margin-top:56px;">사용 방법</h2>
+          <ol class="steps" id="stepsList">
+            <!-- JS가 사용법 3단계를 채움 -->
+          </ol>
         </div>
+      </div>
 
-        <h2 class="info-title" style="margin-top:56px;">사용 방법</h2>
-        <ol class="steps" id="stepsList">
-          <!-- JS가 사용법 3단계를 채움 -->
-        </ol>
+      <div class="tab-content" id="tab-review">
+        <div class="detail-info-inner">
+          <h2 class="info-title">상품 리뷰</h2>
+          <div class="product-reviews-mock">
+            <div class="pr-item">
+              <div class="pr-stars">★★★★★</div>
+              <p class="pr-text">거품이 정말 쫀쫀하고 좋네요! 세정력도 최고입니다. 강추합니다.</p>
+              <span class="pr-author">김*수 | 2024-05-12</span>
+            </div>
+            <div class="pr-item">
+              <div class="pr-stars">★★★★☆</div>
+              <p class="pr-text">배송이 빠르고 안전하게 와서 좋았습니다. 다음에도 여기서 구매할게요.</p>
+              <span class="pr-author">박*민 | 2024-05-10</span>
+            </div>
+            <div class="pr-item">
+              <div class="pr-stars">★★★★★</div>
+              <p class="pr-text">향도 좋고 성능도 아주 만족스럽습니다. 인생템 찾은 것 같아요.</p>
+              <span class="pr-author">이*진 | 2024-05-08</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-qna">
+        <div class="detail-info-inner" style="text-align:center; padding: 60px 0; color: var(--gray-500);">
+          <p>등록된 Q&A가 없습니다.</p>
+          <button class="btn-purchase" style="margin-top: 16px; width:auto; padding: 0 24px;">문의 글쓰기</button>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-policy">
+        <div class="detail-info-inner">
+          <h2 class="info-title">반품/교환 안내</h2>
+          <p style="font-size:14px; color:var(--gray-600); line-height:1.6;">
+            - 상품 수령 후 7일 이내에 교환/반품이 가능합니다.<br>
+            - 단순 변심에 의한 교환/반품 시 배송비는 고객 부담입니다.<br>
+            - 상품의 택(Tag)을 제거하거나 개봉하여 가치가 훼손된 경우 반품이 불가합니다.
+          </p>
+        </div>
       </div>
     </section>
+
+    <!-- ---------- 모바일 하단 고정 구매 바 ---------- -->
+    <div class="sticky-buy-bar">
+      <div class="sticky-buy-inner">
+        <div class="sticky-info">
+          <span class="sticky-name" id="stickyName">상품명</span>
+          <span class="sticky-price" id="stickyPrice">0원</span>
+        </div>
+        <button class="sticky-btn" id="stickyBuyBtn">구매하기</button>
+      </div>
+    </div>
 
     <!-- ---------- 푸터 (상세용, 뉴스레터 포함) ---------- -->
     <footer class="site-footer">

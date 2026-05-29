@@ -1779,3 +1779,124 @@ img:not([src]), img[src=""] {
 }
 .cart-total span { font-size: 15px; color: var(--gray-700); font-weight: 500; }
 .cart-total strong { font-size: 22px; font-weight: 800; color: var(--ink); }
+
+/* ===================== DETAIL TABS & CONTENT ===================== */
+.detail-content-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.detail-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--gray-200);
+  margin-top: 40px;
+  margin-bottom: 32px;
+}
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gray-500);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+.tab-btn.active {
+  color: var(--ink);
+}
+.tab-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--ink);
+}
+.tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.tab-content.active {
+  display: block;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.long-detail-img-mock {
+  width: 100%;
+  height: 600px;
+  background: var(--gray-100);
+  border: 1px dashed var(--gray-300);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--gray-500);
+  margin-bottom: 40px;
+  border-radius: 8px;
+}
+.long-detail-img-mock p { font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+
+.product-reviews-mock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.pr-item {
+  padding: 20px;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  background: var(--white);
+}
+.pr-stars { color: var(--yellow); font-size: 18px; margin-bottom: 8px; }
+.pr-text { font-size: 14px; line-height: 1.5; color: var(--ink); margin-bottom: 12px; }
+.pr-author { font-size: 12px; color: var(--gray-400); }
+
+/* ===================== STICKY BUY BAR ===================== */
+.sticky-buy-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--white);
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+  border-top: 1px solid var(--gray-200);
+  z-index: 900;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.sticky-buy-bar.show {
+  transform: translateY(0);
+}
+.sticky-buy-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sticky-info { display: flex; flex-direction: column; }
+.sticky-name { font-size: 13px; color: var(--gray-500); margin-bottom: 2px; }
+.sticky-price { font-size: 16px; font-weight: 700; color: var(--ink); }
+.sticky-btn {
+  background: var(--blue);
+  color: var(--white);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#detailView {
+  padding-bottom: 80px; /* space for sticky bar */
+}
