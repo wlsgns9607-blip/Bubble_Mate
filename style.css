@@ -1832,6 +1832,14 @@ img:not([src]), img[src=""] {
   .signup-input-wrapper input { font-size: 13px; padding: 12px 40px 12px 14px; }
   .coupon-modal { padding: 30px 20px; }
   .coupon-display { padding: 16px; }
+  
+  /* 모바일 상세 페이지 타이포 및 사용법(단계) 개선 */
+  .buy-name { font-size: 22px; margin-bottom: 12px; }
+  .buy-price { font-size: 26px; }
+  .steps::before { display: none; }
+  .step { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .step-num { width: 36px; height: 36px; font-size: 14px; }
+  .step-card { padding: 14px 16px; width: 100%; }
 }
 
 /* ===================== CART DRAWER ===================== */
