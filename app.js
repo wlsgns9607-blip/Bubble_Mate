@@ -777,6 +777,7 @@ function bindGlobal() {
     if (e.target.closest(".btn-purchase")) openOptionSheet();
     if (e.target.closest(".btn-inquiry"))  showToast("입점사 1:1 문의 채널로 연결합니다.");
     if (e.target.closest(".hero-cta")) alert("상품 준비 중입니다.");
+    if (e.target.closest(".review-write")) alert("리뷰작성은 준비중입니다");
   });
 
   // 브라우저 뒤로가기 처리
