@@ -367,15 +367,29 @@ function renderDetail(p) {
   const thumbs = $("#galleryThumbs");
   thumbs.innerHTML = "";
   const allThumbAlts = [p.mainAlt, ...p.thumbs];
+  
+  // 랜덤 이미지 풀 (디테일 썸네일용)
+  const randomThumbs = [
+    "img_001/Review_001.jpg",
+    "img_001/Review_002.png",
+    "img_001/Review_003.jpg",
+    "img_001/dark-ace-studios-AWJWSfH1ozk-unsplash.jpg",
+    p.mainSrc
+  ];
+
   allThumbAlts.slice(0, 3).forEach((alt, i) => {
     const t = document.createElement("div");
     t.className = "gallery-thumb" + (i === 0 ? " active" : "");
-    t.appendChild(phImage(alt, "", i === 0 ? p.mainSrc : ""));
+    
+    // 첫번째는 메인 이미지, 나머지는 랜덤 풀에서 할당 (고정된 순서로)
+    const thumbSrc = i === 0 ? p.mainSrc : randomThumbs[i % randomThumbs.length];
+    
+    t.appendChild(phImage(alt, "", thumbSrc));
     t.addEventListener("click", () => {
       $$(".gallery-thumb").forEach(x => x.classList.remove("active"));
       t.classList.add("active");
       mainWrap.innerHTML = "";
-      mainWrap.appendChild(phImage(alt, "", i === 0 ? p.mainSrc : ""));
+      mainWrap.appendChild(phImage(alt, "", thumbSrc));
     });
     thumbs.appendChild(t);
   });
