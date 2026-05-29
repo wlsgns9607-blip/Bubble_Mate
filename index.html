@@ -37,7 +37,11 @@
         <button class="icon-btn" aria-label="내 계정">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </button>
-        <button class="login-btn">로그인</button>
+        <div id="userProfile" style="display:none; align-items:center; gap:8px;">
+          <span style="font-size:14px; font-weight:600;"><span id="userNameText"></span>님</span>
+          <button id="logoutBtn" style="background:var(--gray-200); border:none; padding:6px 10px; border-radius:4px; font-size:12px; cursor:pointer;">로그아웃</button>
+        </div>
+        <button class="login-btn" id="headerLoginBtn">로그인</button>
       </div>
     </div>
   </header>
@@ -450,7 +454,7 @@
         </div>
       </div>
       
-      <button class="login-submit">로그인</button>
+      <button class="login-submit" id="loginSubmitBtn">로그인</button>
       
       <div class="login-signup-link">회원가입</div>
       

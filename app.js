@@ -89,6 +89,36 @@ function renderCartItems() {
   totalEl.textContent = won(total);
 }
 
+function checkLoginStatus() {
+  const user = JSON.parse(localStorage.getItem('bubble_user'));
+  const loginBtn = $("#headerLoginBtn") || $(".login-btn");
+  const userProfile = $("#userProfile");
+  const userNameText = $("#userNameText");
+
+  if (user && user.name) {
+    if (loginBtn) loginBtn.style.display = "none";
+    if (userProfile) userProfile.style.display = "flex";
+    if (userNameText) userNameText.textContent = user.name;
+  } else {
+    if (loginBtn) loginBtn.style.display = "inline-flex";
+    if (userProfile) userProfile.style.display = "none";
+    if (userNameText) userNameText.textContent = "";
+  }
+}
+
+function simulateLogin(username) {
+  localStorage.setItem('bubble_user', JSON.stringify({ name: username }));
+  checkLoginStatus();
+  showToast(username + "님 환영합니다!");
+  closeLoginModal();
+}
+
+function simulateLogout() {
+  localStorage.removeItem('bubble_user');
+  checkLoginStatus();
+  showToast("로그아웃 되었습니다.");
+}
+
 function recordRecentView(productId) {
   let recent = JSON.parse(localStorage.getItem('bubble_recent') || '[]');
   recent = recent.filter(id => id !== productId);
@@ -606,9 +636,23 @@ function bindGlobal() {
   });
 
   // 로그인 모달 이벤트
-  const loginBtn = $(".login-btn");
+  const loginBtn = $("#headerLoginBtn") || $(".login-btn");
   if (loginBtn) {
     loginBtn.addEventListener("click", openLoginModal);
+  }
+  const loginSubmitBtn = $("#loginSubmitBtn");
+  if (loginSubmitBtn) {
+    loginSubmitBtn.addEventListener("click", () => {
+      simulateLogin("김철수");
+    });
+  }
+  $$(".social-btn").forEach(btn => {
+    btn.addEventListener("click", () => simulateLogin("소셜유저"));
+  });
+  
+  const logoutBtn = $("#logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", simulateLogout);
   }
   const loginClose = $("#loginClose");
   if (loginClose) {
@@ -758,6 +802,7 @@ function bindEventSlider() {
    12) 초기화
    ========================================================= */
 function init() {
+  checkLoginStatus();
   updateCartBadge();
   buildHero();
   buildCategories();
