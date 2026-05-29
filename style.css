@@ -1784,7 +1784,7 @@ img:not([src]), img[src=""] {
 .detail-content-section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 24px 80px; /* added 80px bottom padding to separate from footer */
 }
 .detail-tabs {
   display: flex;
