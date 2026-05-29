@@ -214,6 +214,9 @@ img:not([src]), img[src=""] {
   stroke-linecap: round; stroke-linejoin: round;
 }
 .login-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: 38px;
   padding: 0 18px;
   border-radius: 10px;
