@@ -564,31 +564,14 @@ function openOptionSheet() {
 
   $("#optionProduct").textContent = currentProduct.name;
 
-  // 용량 칩
   const chips = $("#optionChips");
-  chips.innerHTML = "";
-  VOLUME_OPTIONS.forEach((v, i) => {
-    const chip = document.createElement("button");
-    chip.className = "option-chip" + (i === 0 ? " active" : "");
-    chip.textContent = v.label;
-    chip.addEventListener("click", () => {
-      sheetVolumeIdx = i;
-      $$(".option-chip").forEach(c => c.classList.remove("active"));
-      chip.classList.add("active");
-      updateOptionTotal();
-    });
-    chips.appendChild(chip);
-  });
+  if (chips) chips.innerHTML = "";
 
   $("#sheetQty").textContent = sheetQty;
   
   const volumeGroup = $("#optionChips").closest(".option-group");
   if (volumeGroup) {
-    if (currentProduct.id === "pro-wheel-brush") {
-      volumeGroup.style.display = "none";
-    } else {
-      volumeGroup.style.display = "block";
-    }
+    volumeGroup.style.display = "none";
   }
 
   updateOptionTotal();
@@ -603,9 +586,7 @@ function closeOptionSheet() {
 }
 
 function updateOptionTotal() {
-  const isBrush = currentProduct.id === "pro-wheel-brush";
-  const base = currentProduct.price + (isBrush ? 0 : VOLUME_OPTIONS[sheetVolumeIdx].add);
-  $("#optionTotal").textContent = won(base * sheetQty);
+  $("#optionTotal").textContent = won(currentProduct.price * sheetQty);
 }
 
 function bindOptionSheet() {
@@ -626,24 +607,21 @@ function bindOptionSheet() {
   if (addCartBtn) {
     addCartBtn.addEventListener("click", () => {
       if (!currentProduct) return;
-      const isBrush = currentProduct.id === "pro-wheel-brush";
       addToCart({
         id: currentProduct.id,
         name: currentProduct.name,
         qty: sheetQty,
-        volume: isBrush ? "" : VOLUME_OPTIONS[sheetVolumeIdx].label,
-        price: currentProduct.price + (isBrush ? 0 : VOLUME_OPTIONS[sheetVolumeIdx].add)
+        volume: "",
+        price: currentProduct.price
       });
       closeOptionSheet();
     });
   }
 
   $("#tossBtn").addEventListener("click", () => {
-    const isBrush = currentProduct.id === "pro-wheel-brush";
-    const base = currentProduct.price + (isBrush ? 0 : VOLUME_OPTIONS[sheetVolumeIdx].add);
-    const amount = base * sheetQty;
+    const amount = currentProduct.price * sheetQty;
     const orderId = "order_" + new Date().getTime() + "_" + Math.floor(Math.random() * 1000);
-    const orderName = currentProduct.name + (isBrush ? "" : " (" + VOLUME_OPTIONS[sheetVolumeIdx].label + ")");
+    const orderName = currentProduct.name;
 
     closeOptionSheet();
     
