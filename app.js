@@ -69,7 +69,7 @@ function renderCartItems() {
     div.innerHTML = `
       <div class="cart-item-info">
         <span class="cart-item-name">${item.name} <span style="color:#64748b; font-weight:400; margin-left:4px;">x${item.qty}</span></span>
-        <span class="cart-item-vol">옵션: ${item.volume}</span>
+        ${item.volume ? `<span class="cart-item-vol">옵션: ${item.volume}</span>` : ""}
         <span class="cart-item-price">${won(item.price * item.qty)}</span>
       </div>
       <span class="cart-item-del" data-index="${index}">삭제</span>
@@ -581,6 +581,16 @@ function openOptionSheet() {
   });
 
   $("#sheetQty").textContent = sheetQty;
+  
+  const volumeGroup = $("#optionChips").closest(".option-group");
+  if (volumeGroup) {
+    if (currentProduct.id === "pro-wheel-brush") {
+      volumeGroup.style.display = "none";
+    } else {
+      volumeGroup.style.display = "block";
+    }
+  }
+
   updateOptionTotal();
 
   $("#optionOverlay").hidden = false;
@@ -593,7 +603,8 @@ function closeOptionSheet() {
 }
 
 function updateOptionTotal() {
-  const base = currentProduct.price + VOLUME_OPTIONS[sheetVolumeIdx].add;
+  const isBrush = currentProduct.id === "pro-wheel-brush";
+  const base = currentProduct.price + (isBrush ? 0 : VOLUME_OPTIONS[sheetVolumeIdx].add);
   $("#optionTotal").textContent = won(base * sheetQty);
 }
 
@@ -615,22 +626,24 @@ function bindOptionSheet() {
   if (addCartBtn) {
     addCartBtn.addEventListener("click", () => {
       if (!currentProduct) return;
+      const isBrush = currentProduct.id === "pro-wheel-brush";
       addToCart({
         id: currentProduct.id,
         name: currentProduct.name,
         qty: sheetQty,
-        volume: VOLUME_OPTIONS[sheetVolumeIdx].label,
-        price: currentProduct.price + VOLUME_OPTIONS[sheetVolumeIdx].add
+        volume: isBrush ? "" : VOLUME_OPTIONS[sheetVolumeIdx].label,
+        price: currentProduct.price + (isBrush ? 0 : VOLUME_OPTIONS[sheetVolumeIdx].add)
       });
       closeOptionSheet();
     });
   }
 
   $("#tossBtn").addEventListener("click", () => {
-    const base = currentProduct.price + VOLUME_OPTIONS[sheetVolumeIdx].add;
+    const isBrush = currentProduct.id === "pro-wheel-brush";
+    const base = currentProduct.price + (isBrush ? 0 : VOLUME_OPTIONS[sheetVolumeIdx].add);
     const amount = base * sheetQty;
     const orderId = "order_" + new Date().getTime() + "_" + Math.floor(Math.random() * 1000);
-    const orderName = currentProduct.name + " (" + VOLUME_OPTIONS[sheetVolumeIdx].label + ")";
+    const orderName = currentProduct.name + (isBrush ? "" : " (" + VOLUME_OPTIONS[sheetVolumeIdx].label + ")");
 
     closeOptionSheet();
     
