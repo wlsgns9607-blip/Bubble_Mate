@@ -635,9 +635,13 @@ const HERO_SLIDES = [
 
 let PRODUCTS = [];
 try {
-  // Always reload fresh defaults for portfolio update
-  PRODUCTS = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-  localStorage.setItem("bubble_products", JSON.stringify(PRODUCTS));
+  const storedProducts = localStorage.getItem("bubble_products");
+  if (storedProducts) {
+    PRODUCTS = JSON.parse(storedProducts);
+  } else {
+    PRODUCTS = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+    localStorage.setItem("bubble_products", JSON.stringify(PRODUCTS));
+  }
 } catch(e) {
   PRODUCTS = DEFAULT_PRODUCTS;
 }
