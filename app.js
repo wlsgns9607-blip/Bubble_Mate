@@ -122,8 +122,17 @@ function simulateLogin(username) {
   localStorage.setItem('bubble_user', JSON.stringify({ name: username }));
   checkLoginStatus();
   alert("로그인이 되었습니다.");
-  goHome();
+  
+  if ($("#detailView").hidden) {
+    goHome();
+  }
+  
   closeLoginModal();
+  
+  if (pendingBuy) {
+    pendingBuy = false;
+    openOptionSheet();
+  }
 }
 
 function simulateLogout() {
@@ -378,6 +387,18 @@ function buildReviews(pageIndex = 0) {
    ========================================================= */
 let currentProduct = null;
 let detailQty = 1;
+let pendingBuy = false;
+
+function handlePurchaseClick() {
+  const user = JSON.parse(localStorage.getItem('bubble_user'));
+  if (user && user.name) {
+    openOptionSheet();
+  } else {
+    pendingBuy = true;
+    showToast("로그인이 필요한 서비스입니다.");
+    openLoginModal();
+  }
+}
 
 function openDetail(productId) {
   const p = PRODUCTS.find(x => x.id === productId);
@@ -814,7 +835,11 @@ function bindGlobal() {
 
   // 버튼 공통 이벤트 (이벤트 위임)
   document.addEventListener("click", (e) => {
-    if (e.target.closest(".btn-purchase")) openOptionSheet();
+    if (e.target.closest(".detail-top .btn-purchase")) {
+      handlePurchaseClick();
+    } else if (e.target.closest("#tab-qna .btn-purchase")) {
+      showToast("Q&A 문의 등록 기능은 준비 중입니다.");
+    }
     if (e.target.closest(".btn-inquiry"))  showToast("입점사 1:1 문의 채널로 연결합니다.");
     if (e.target.closest(".hero-cta")) alert("상품 준비 중입니다.");
     if (e.target.closest(".review-write")) alert("리뷰작성은 준비중입니다");
@@ -859,7 +884,7 @@ function bindGlobal() {
   const stickyBuyBtn = $("#stickyBuyBtn");
   if (stickyBuyBtn) {
     stickyBuyBtn.addEventListener("click", () => {
-      openOptionSheet();
+      handlePurchaseClick();
     });
   }
 
@@ -1055,6 +1080,7 @@ function openLoginModal() {
 function closeLoginModal() {
   $("#loginOverlay").hidden = true;
   $("#loginModal").hidden = true;
+  pendingBuy = false;
 }
 
 function openSignupModal() {
