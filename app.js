@@ -321,10 +321,16 @@ function buildProducts(items = PRODUCTS) {
 /* =========================================================
    4) 리뷰 렌더링
    ========================================================= */
-function buildReviews() {
+function buildReviews(pageIndex = 0) {
   const grid = $("#reviewGrid");
   grid.innerHTML = "";
-  REVIEWS.forEach(r => {
+  
+  const reviewsPerPage = 3;
+  const start = pageIndex * reviewsPerPage;
+  const end = start + reviewsPerPage;
+  const pageReviews = REVIEWS.slice(start, end);
+
+  pageReviews.forEach(r => {
     const item = document.createElement("div");
     item.className = "review-item";
     
@@ -1153,6 +1159,7 @@ function bindReviewPagination() {
     btn.addEventListener("click", () => {
       setActiveIndex(i);
       showToast("리뷰 " + (i + 1) + "페이지로 이동합니다.");
+      buildReviews(i);
     });
   });
 
@@ -1162,6 +1169,7 @@ function bindReviewPagination() {
       if (idx > 0) {
         setActiveIndex(idx - 1);
         showToast("리뷰 " + idx + "페이지로 이동합니다.");
+        buildReviews(idx - 1);
       } else {
         showToast("첫 번째 페이지입니다.");
       }
@@ -1174,6 +1182,7 @@ function bindReviewPagination() {
       if (idx < numbers.length - 1) {
         setActiveIndex(idx + 1);
         showToast("리뷰 " + (idx + 2) + "페이지로 이동합니다.");
+        buildReviews(idx + 1);
       } else {
         showToast("마지막 페이지입니다.");
       }
