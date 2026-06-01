@@ -460,27 +460,7 @@ function renderDetail(p) {
   mainWrap.innerHTML = "";
   mainWrap.appendChild(phImage(p.mainAlt, "", p.mainSrc));
 
-  // 마우스 호버 시 돋보기 효과 이벤트 바인딩
-  mainWrap.addEventListener("mousemove", (e) => {
-    const rect = mainWrap.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    // 백분율로 환산 (transform-origin 설정용)
-    const xPercent = (x / rect.width) * 100;
-    const yPercent = (y / rect.height) * 100;
-    
-    const img = mainWrap.querySelector("img");
-    if (img) {
-      mainWrap.classList.add("zooming");
-      img.style.transformOrigin = `${xPercent}% ${yPercent}%`;
-    }
-  });
 
-  mainWrap.addEventListener("mouseleave", () => {
-    mainWrap.classList.remove("zooming");
-    const img = mainWrap.querySelector("img");
-    if (img) img.style.transformOrigin = "center center";
-  });
 
   // 썸네일
   const thumbs = $("#galleryThumbs");
