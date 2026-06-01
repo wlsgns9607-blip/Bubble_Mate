@@ -93,7 +93,7 @@ const DEFAULT_PRODUCTS = [
   {
     id: "adbl-interior",
     brand: "ADBL",
-    name: "인테리어 클리너 체리향",
+    name: "인테리어 클리너 체리향 500ml",
     discount: 20,
     price: 14400,
     rating: 4.8,
@@ -368,7 +368,7 @@ const DEFAULT_PRODUCTS = [
   {
     id: "pro-crystal-coating",
     brand: "BUBBLE MATE",
-    name: "크리스탈 유리막코팅제",
+    name: "크리스탈 유리막코팅제 50ml",
     discount: 0,
     price: 84000,
     rating: 4.9,
