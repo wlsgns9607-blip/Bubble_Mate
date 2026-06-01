@@ -119,15 +119,19 @@ function getCallbackUrl() {
 }
 
 function simulateLogin(username) {
+  // 1) 모달 먼저 닫기 (자연스러운 전환)
+  closeLoginModal();
+  
+  // 2) 로그인 상태 저장 및 UI 업데이트
   localStorage.setItem('bubble_user', JSON.stringify({ name: username }));
   checkLoginStatus();
-  alert("로그인이 되었습니다.");
+  
+  // 3) 앱 내 토스트로 자연스러운 알림
+  showToast(`${username}님, 환영합니다! 🎉`);
   
   if ($("#detailView").hidden) {
     goHome();
   }
-  
-  closeLoginModal();
   
   if (pendingBuy) {
     pendingBuy = false;
@@ -271,7 +275,7 @@ function buildCategories() {
         $(".section-title").textContent = "실시간 인기 랭킹 상품 🔥";
         $(".ranking").scrollIntoView({ behavior: "smooth" });
       } else {
-        alert("카테고리 상품 준비 중입니다.");
+        showToast("카테고리 상품 준비 중입니다.");
       }
     });
     list.appendChild(li);
@@ -775,7 +779,7 @@ function bindGlobal() {
 
         $(".ranking").scrollIntoView({ behavior: "smooth" });
       } else {
-        alert("카테고리 상품 준비 중입니다.");
+        showToast("카테고리 상품 준비 중입니다.");
       }
     });
   });
@@ -821,8 +825,8 @@ function bindGlobal() {
       showToast("Q&A 문의 등록 기능은 준비 중입니다.");
     }
     if (e.target.closest(".btn-inquiry"))  showToast("입점사 1:1 문의 채널로 연결합니다.");
-    if (e.target.closest(".hero-cta")) alert("상품 준비 중입니다.");
-    if (e.target.closest(".review-write")) alert("리뷰작성은 준비중입니다");
+    if (e.target.closest(".hero-cta")) showToast("상품 준비 중입니다.");
+    if (e.target.closest(".review-write")) showToast("리뷰 작성은 준비 중입니다.");
   });
 
   // 브라우저 뒤로가기 처리
@@ -893,7 +897,7 @@ function bindGlobal() {
     cartCheckoutBtn.addEventListener("click", () => {
       const cart = getCart();
       if (cart.length === 0) {
-        alert("장바구니가 비어 있습니다.");
+        showToast("장바구니가 비어 있습니다.");
         return;
       }
       
@@ -1004,7 +1008,7 @@ function bindGlobal() {
       const specialCharRegex = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/;
 
       if (!specialCharRegex.test(password)) {
-        alert("비밀번호에는 특수문자가 반드시 포함되어야 합니다.");
+        showToast("비밀번호에는 특수문자가 반드시 포함되어야 합니다.");
         if (passwordInput) {
           passwordInput.focus();
         }
