@@ -208,6 +208,98 @@
         <h2>사업자라면 Bubble Mate 에서<br>합리적으로 구매하세요</h2>
         <button class="business-btn" onclick="alert('카테고리 상품 준비 중입니다.');">구매하기</button>
       </div>
+      
+      <!-- 전문가용 세차용품 섹션 -->
+      <div class="expert-section">
+        <h2 class="expert-section-title">전문가용 세차용품</h2>
+        <div class="expert-slider">
+          <div class="expert-track" id="expertTrack">
+            <!-- 1번째 카드 -->
+            <div class="expert-card" onclick="openDetail('pro-crystal-coating')">
+              <div class="expert-card-img">
+                <img src="img_001/Expert_001.png" alt="크리스탈 유리막코팅제">
+              </div>
+              <div class="expert-card-info">
+                <p class="expert-card-name">크리스탈 유리막코팅제</p>
+                <p class="expert-card-price">84000won</p>
+              </div>
+            </div>
+            <!-- 2번째 카드 -->
+            <div class="expert-card" onclick="openDetail('pro-snowfoam-bottle')">
+              <div class="expert-card-img">
+                <img src="img_001/snow.png" alt="탈부착 스노우폼 통">
+              </div>
+              <div class="expert-card-info">
+                <p class="expert-card-name">탈부착 스노우폼 통</p>
+                <p class="expert-card-price">21000won</p>
+              </div>
+            </div>
+            <!-- 3번째 카드 -->
+            <div class="expert-card" onclick="openDetail('pro-high-sprayer')">
+              <div class="expert-card-img">
+                <img src="img_001/rap.png" alt="고압축분무기">
+              </div>
+              <div class="expert-card-info">
+                <p class="expert-card-name">고압축분무기</p>
+                <p class="expert-card-price">34000won</p>
+              </div>
+            </div>
+            <!-- 4번째 카드 -->
+            <div class="expert-card" onclick="openDetail('pro-leather-coating')">
+              <div class="expert-card-img">
+                <img src="img_001/Leather_Coating.png" alt="가죽코팅제">
+              </div>
+              <div class="expert-card-info">
+                <p class="expert-card-name">가죽코팅제</p>
+                <p class="expert-card-price">45000won</p>
+              </div>
+            </div>
+            <!-- 5번째 카드 -->
+            <div class="expert-card" onclick="openDetail('pro-dual-polisher')">
+              <div class="expert-card-img">
+                <img src="img_001/Specialist.png" alt="Mate 5인치 무선 듀얼 광택기">
+              </div>
+              <div class="expert-card-info">
+                <p class="expert-card-name">Mate 5인치 무선 듀얼 광택기</p>
+                <p class="expert-card-price">135000won</p>
+              </div>
+            </div>
+            <!-- 6번째 카드 -->
+            <div class="expert-card" onclick="openDetail('pro-emerald-wax')">
+              <div class="expert-card-img">
+                <img src="img_001/Expert_002.png" alt="슈퍼 에메랄드 발수왁스">
+              </div>
+              <div class="expert-card-info">
+                <p class="expert-card-name">슈퍼 에메랄드 발수왁스</p>
+                <p class="expert-card-price">54000won</p>
+              </div>
+            </div>
+            <!-- 7번째 카드 -->
+            <div class="expert-card" onclick="openDetail('pro-glass-pad')">
+              <div class="expert-card-img">
+                <img src="img_001/you.png" alt="유막제거용 5인치 패드">
+              </div>
+              <div class="expert-card-info">
+                <p class="expert-card-name">유막제거용 5인치 패드</p>
+                <p class="expert-card-price">8500won</p>
+              </div>
+            </div>
+            <!-- 8번째 카드 -->
+            <div class="expert-card" onclick="openDetail('pro-wool-pad')">
+              <div class="expert-card-img">
+                <img src="img_001/yaumg.png" alt="5인치 양모패드">
+              </div>
+              <div class="expert-card-info">
+                <p class="expert-card-name">5인치 양모패드</p>
+                <p class="expert-card-price">12000won</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="expert-progress">
+          <div class="expert-progress-bar" id="expertProgressBar"></div>
+        </div>
+      </div>
     </div>
 </section>
 
@@ -237,6 +329,34 @@
       </div>
       <div class="review-grid" id="reviewGrid">
         <!-- JS가 리뷰를 채움 -->
+      </div>
+
+      <!-- 리뷰 페이지네이션 -->
+      <div class="review-pagination">
+        <button class="pagi-arrow pagi-prev" aria-label="이전 페이지">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="17 18 11 12 17 6"></polyline>
+            <polyline points="11 18 5 12 11 6"></polyline>
+          </svg>
+        </button>
+        <div class="pagi-numbers">
+          <button class="pagi-number active">1</button>
+          <button class="pagi-number">2</button>
+          <button class="pagi-number">3</button>
+          <button class="pagi-number">4</button>
+          <button class="pagi-number">5</button>
+          <button class="pagi-number">6</button>
+          <button class="pagi-number">7</button>
+          <button class="pagi-number">8</button>
+          <button class="pagi-number">9</button>
+          <button class="pagi-number">10</button>
+        </div>
+        <button class="pagi-arrow pagi-next" aria-label="다음 페이지">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="7 18 13 12 7 6"></polyline>
+            <polyline points="13 18 19 12 13 6"></polyline>
+          </svg>
+        </button>
       </div>
     </section>
 

@@ -263,8 +263,8 @@ function buildProducts(items = PRODUCTS) {
   const grid = $("#productGrid");
   grid.innerHTML = "";
 
-  // Filter out products that are designed for hero slider (i.e. those with badge property) and event products
-  const displayItems = items.filter(p => !p.badge && !p.id.startsWith("event-"));
+  // Filter out products that are designed for hero slider and event products, and keep exactly 8 popular products
+  const displayItems = items.filter(p => !p.badge && !p.id.startsWith("event-")).slice(0, 8);
 
   if (displayItems.length === 0) {
     grid.innerHTML = `
@@ -1130,6 +1130,114 @@ function bindEventSlider() {
 }
 
 /* =========================================================
+   11-2) 리뷰 페이지네이션 바인딩
+   ========================================================= */
+function bindReviewPagination() {
+  const numbers = $$(".pagi-number");
+  const prevBtn = $(".pagi-prev");
+  const nextBtn = $(".pagi-next");
+
+  if (!numbers.length) return;
+
+  function getActiveIndex() {
+    return numbers.findIndex(btn => btn.classList.contains("active"));
+  }
+
+  function setActiveIndex(index) {
+    numbers.forEach((btn, i) => {
+      btn.classList.toggle("active", i === index);
+    });
+  }
+
+  numbers.forEach((btn, i) => {
+    btn.addEventListener("click", () => {
+      setActiveIndex(i);
+      showToast("리뷰 " + (i + 1) + "페이지로 이동합니다.");
+    });
+  });
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      const idx = getActiveIndex();
+      if (idx > 0) {
+        setActiveIndex(idx - 1);
+        showToast("리뷰 " + idx + "페이지로 이동합니다.");
+      } else {
+        showToast("첫 번째 페이지입니다.");
+      }
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      const idx = getActiveIndex();
+      if (idx < numbers.length - 1) {
+        setActiveIndex(idx + 1);
+        showToast("리뷰 " + (idx + 2) + "페이지로 이동합니다.");
+      } else {
+        showToast("마지막 페이지입니다.");
+      }
+    });
+  }
+}
+
+/* =========================================================
+   11-3) 전문가용 세차용품 슬라이더 스크롤 연동
+   ========================================================= */
+function bindExpertSlider() {
+  const track = $("#expertTrack");
+  const bar = $("#expertProgressBar");
+  if (!track || !bar) return;
+
+  function updateProgress() {
+    const scrollLeft = track.scrollLeft;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    if (maxScroll <= 0) {
+      bar.style.transform = `translateX(0)`;
+      return;
+    }
+    const ratio = scrollLeft / maxScroll;
+    bar.style.transform = `translateX(${ratio * 150}%)`;
+  }
+  
+  track.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+  
+  setTimeout(updateProgress, 100);
+
+  // 자동 슬라이드 로직 (4개 카드 단위 페이지 스크롤)
+  let autoSlideTimer = setInterval(autoSlide, 4000);
+  
+  function autoSlide() {
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    if (maxScroll <= 0) return;
+    
+    // 4개 카드가 담긴 한 페이지 너비 계산 (컨테이너 너비 + gap)
+    const pageWidth = track.clientWidth + 20; 
+    let nextScroll = track.scrollLeft + pageWidth;
+
+    // 끝 페이지에 도달하면 다시 첫 페이지로 복귀
+    if (nextScroll >= track.scrollWidth - 10) {
+      track.scrollLeft = 0;
+    } else {
+      track.scrollLeft = nextScroll;
+    }
+  }
+
+  // 마우스/터치 시 정지 및 재시작
+  track.addEventListener("mouseenter", () => clearInterval(autoSlideTimer));
+  track.addEventListener("mouseleave", () => {
+    clearInterval(autoSlideTimer);
+    autoSlideTimer = setInterval(autoSlide, 4000);
+  });
+  track.addEventListener("touchstart", () => clearInterval(autoSlideTimer), { passive: true });
+  track.addEventListener("touchend", () => {
+    clearInterval(autoSlideTimer);
+    autoSlideTimer = setInterval(autoSlide, 4000);
+  }, { passive: true });
+}
+
+/* =========================================================
    12) 초기화
    ========================================================= */
 function init() {
@@ -1143,6 +1251,8 @@ function init() {
   bindOptionSheet();
   bindGlobal();
   bindEventSlider();
+  bindExpertSlider();
+  bindReviewPagination();
   resetHeroTimer();
 
   // 주소에 #product=... 있으면 해당 상세로 바로 진입

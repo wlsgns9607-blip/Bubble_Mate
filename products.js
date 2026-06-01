@@ -364,6 +364,214 @@ const DEFAULT_PRODUCTS = [
       { title: "대기", body: "오염이 분해될 수 있도록 약 1~2분 정도 기다립니다." },
       { title: "세척", body: "고압수나 브러쉬를 이용하여 깨끗하게 헹궈냅니다." }
     ]
+  },
+  {
+    id: "pro-crystal-coating",
+    brand: "BUBBLE MATE",
+    name: "크리스탈 유리막코팅제",
+    discount: 0,
+    price: 84000,
+    rating: 4.9,
+    ratingCount: 120,
+    mainAlt: "크리스탈 유리막코팅제",
+    mainSrc: "img_001/Expert_001.png",
+    category: "광택/코팅",
+    tags: ["전문가 도구", "광택/코팅"],
+    thumbs: [
+      "img_001/Expert_001.png"
+    ],
+    tip: "차량 도장면에 얇게 도포한 후 버핑타월로 원을 그리며 닦아주시면 깊은 광택과 초발수 코팅막이 형성됩니다.",
+    features: [
+      { title: "고경도 코팅막", body: "도장면에 강력한 크리스탈 코팅막을 형성하여 스크래치와 오염을 원천 차단합니다." },
+      { title: "초발수 방오력", body: "빗물과 오염물이 도장면에 머물지 않고 흘러내려 세차가 매우 간편해집니다." }
+    ],
+    steps: [
+      { title: "도장면 정리", body: "세차 후 물기를 완전히 제거하고 탈지제를 사용하여 유분을 제거합니다." },
+      { title: "코팅제 도포", body: "어플리케이터에 코팅제를 덜어 격자 모양으로 얇고 균일하게 펴 바릅니다." },
+      { title: "버핑 마감", body: "도포 후 3~5분 이내에 깨끗한 버핑 타월로 잔여물이 남지 않도록 버핑합니다." }
+    ]
+  },
+  {
+    id: "pro-snowfoam-bottle",
+    brand: "BUBBLE MATE",
+    name: "탈부착 스노우폼 통",
+    discount: 0,
+    price: 21000,
+    rating: 4.8,
+    ratingCount: 95,
+    mainAlt: "탈부착 스노우폼 통",
+    mainSrc: "img_001/snow.png",
+    category: "폼건/분무기",
+    tags: ["전문가 도구", "폼건/분무기"],
+    thumbs: [
+      "img_001/snow.png"
+    ],
+    tip: "고압세척기 랜스에 연결하여 풍성하고 찰진 거품을 만들어 내는 프리미엄 폼랜스 보틀입니다.",
+    features: [
+      { title: "간편한 탈부착", body: "퀵커플러 방식으로 원터치 탈부착이 가능하여 작업 속도를 획기적으로 줄여줍니다." },
+      { title: "내화학성 강화 보틀", body: "고농축 카샴푸나 알칼리성 약재에도 변형되지 않는 특수 강화 플라스틱 재질입니다." }
+    ],
+    steps: [
+      { title: "약재 희석", body: "보틀에 카샴푸와 물을 권장 비율(보통 1:10)로 채워 섞어줍니다." },
+      { title: "랜스 결합", body: "고압 세척기 건 끝부분에 퀵 커플러를 이용해 스노우폼 보틀을 장착합니다." },
+      { title: "거품 분사", body: "다이얼로 거품 농도를 조절한 뒤 차량 전체에 골고루 분사합니다." }
+    ]
+  },
+  {
+    id: "pro-high-sprayer",
+    brand: "BUBBLE MATE",
+    name: "고압축분무기",
+    discount: 0,
+    price: 34000,
+    rating: 4.7,
+    ratingCount: 180,
+    mainAlt: "고압축분무기",
+    mainSrc: "img_001/rap.png",
+    category: "폼건/분무기",
+    tags: ["전문가 도구", "폼건/분무기"],
+    thumbs: [
+      "img_001/rap.png"
+    ],
+    tip: "휠클리너, APC 등 다양한 세차 약재를 압축 압력으로 안개처럼 미세하고 균일하게 분사해 줍니다.",
+    features: [
+      { title: "강력한 압축 압력", body: "적은 펌핑으로도 오래 지속되는 강력한 압축력을 제공합니다." },
+      { title: "조절 가능한 노즐", body: "분사 각도를 안개 분사부터 직사 분사까지 자유롭게 조절할 수 있습니다." }
+    ],
+    steps: [
+      { title: "약제 주입", body: "분무기 상단 헤드를 열어 약제 또는 희석액을 채워 넣습니다." },
+      { title: "압축 펌핑", body: "피스톤 손잡이를 위아래로 반복하여 내부 압력을 충분히 가해 줍니다." },
+      { title: "분사 및 사용", body: "레버 버튼을 눌러 필요한 부위에 고르게 분사합니다." }
+    ]
+  },
+  {
+    id: "pro-leather-coating",
+    brand: "BUBBLE MATE",
+    name: "가죽코팅제",
+    discount: 0,
+    price: 45000,
+    rating: 4.9,
+    ratingCount: 75,
+    mainAlt: "가죽코팅제",
+    mainSrc: "img_001/Leather_Coating.png",
+    category: "실내관리",
+    tags: ["전문가 도구", "실내관리"],
+    thumbs: [
+      "img_001/Leather_Coating.png"
+    ],
+    tip: "가죽 시트 표면에 보호막을 형성하여 이염, 갈라짐, 노화를 방지하는 전문가용 가죽 코팅제입니다.",
+    features: [
+      { title: "이염 및 스크래치 방지", body: "청바지 이염이나 외부 자극으로부터 가죽 본연의 질감을 보호합니다." },
+      { title: "자연스러운 매트 광택", body: "번들거림 없이 가죽 순정 상태 고유의 은은하고 고급스러운 매트함을 유지합니다." }
+    ],
+    steps: [
+      { title: "가죽 세정", body: "가죽 클리너를 사용하여 코팅할 표면의 유분과 때를 깨끗이 닦아냅니다." },
+      { title: "코팅제 도포", body: "어플리케이터나 타월에 가죽 코팅제를 적당량 묻혀 부드럽게 문지르며 펴 바릅니다." },
+      { title: "경화 및 건조", body: "도포 후 약 10~15분 동안 자연 경화시킨 뒤, 마른 타월로 가볍게 잔여물을 정리합니다." }
+    ]
+  },
+  {
+    id: "pro-dual-polisher",
+    brand: "BUBBLE MATE",
+    name: "Mate 5인치 무선 듀얼 광택기",
+    discount: 0,
+    price: 135000,
+    rating: 4.9,
+    ratingCount: 88,
+    mainAlt: "Mate 5인치 무선 듀얼 광택기",
+    mainSrc: "img_001/Specialist.png",
+    category: "광택/코팅",
+    tags: ["전문가 도구"],
+    thumbs: [
+      "img_001/Specialist.png"
+    ],
+    tip: "무선의 자유로움과 강력한 파워를 동시에 느낄 수 있는 전문가용 듀얼 액션 폴리셔입니다.",
+    features: [
+      { title: "듀얼 액션 방식", body: "안정적인 작업성과 홀로그램 최소화를 실현했습니다." },
+      { title: "6단계 속도 조절", body: "도장 상태에 맞는 최적의 rpm 설정이 가능합니다." }
+    ],
+    steps: [
+      { title: "패드 장착", body: "백킹 플레이트 중앙에 맞추어 버핑 패드를 부착합니다." },
+      { title: "약재 도포", body: "패드 표면에 광택 약재를 골고루 묻혀줍니다." },
+      { title: "광택 작업", body: "저단에서 시작하여 점차 단수를 올리며 가볍게 가압하여 작업합니다." }
+    ]
+  },
+  {
+    id: "pro-emerald-wax",
+    brand: "BUBBLE MATE",
+    name: "슈퍼 에메랄드 발수왁스",
+    discount: 0,
+    price: 54000,
+    rating: 4.8,
+    ratingCount: 104,
+    mainAlt: "슈퍼 에메랄드 발수왁스",
+    mainSrc: "img_001/Expert_002.png",
+    category: "광택/코팅",
+    tags: ["전문가 도구"],
+    thumbs: [
+      "img_001/Expert_002.png"
+    ],
+    tip: "뿌리고 닦기만 하면 깊은 습식 광택과 최상의 초발수 방오 성능을 보여주는 하이엔드 액체 왁스입니다.",
+    features: [
+      { title: "강력한 발수력", body: "빗물과 오염물을 튕겨내어 시야 및 도장면 오염을 방지합니다." },
+      { title: "선명한 광택", body: "차량 본연의 깊고 선명한 색상을 극대화합니다." }
+    ],
+    steps: [
+      { title: "세차 및 타월 정리", body: "깨끗하게 세차 후 물기를 완전히 닦아냅니다." },
+      { title: "왁스 분사", body: "도장면에 가볍게 분사한 후 버핑타월로 원을 그리듯 문지릅니다." },
+      { title: "버핑 마감", body: "잔여물이 남지 않도록 깨끗한 면으로 최종 버핑해 줍니다." }
+    ]
+  },
+  {
+    id: "pro-glass-pad",
+    brand: "BUBBLE MATE",
+    name: "유막제거용 5인치 패드",
+    discount: 0,
+    price: 8500,
+    rating: 4.7,
+    ratingCount: 62,
+    mainAlt: "유막제거용 5인치 패드",
+    mainSrc: "img_001/you.png",
+    category: "세차타월",
+    tags: ["전문가 도구"],
+    thumbs: [
+      "img_001/you.png"
+    ],
+    tip: "유리 유막 제거제와 매칭하여 찌든 유막과 물때를 빠르고 확실하게 연마해 주는 전용 패드입니다.",
+    features: [
+      { title: "강력한 연마력", body: "고밀도 압축 펠트 재질로 제작되어 유막 제거 성능을 향상시킵니다." },
+      { title: "우수한 내구성", body: "세척 후 여러 번 재사용이 가능하도록 벨크로와 접착면을 강화했습니다." }
+    ],
+    steps: [
+      { title: "플레이트 결합", body: "5인치 샌더기 또는 백킹 플레이트에 패드를 견고하게 부착합니다." },
+      { title: "유막제거제 도포", body: "패드 면에 적당량의 유막제거제를 짜서 분포시킵니다." },
+      { title: "유리 연마", body: "적당한 가압으로 유리를 종횡으로 겹쳐 문지르며 유막을 제거합니다." }
+    ]
+  },
+  {
+    id: "pro-wool-pad",
+    brand: "BUBBLE MATE",
+    name: "5인치 양모패드",
+    discount: 0,
+    price: 12000,
+    rating: 4.9,
+    ratingCount: 45,
+    mainAlt: "5인치 양모패드",
+    mainSrc: "img_001/yaumg.png",
+    category: "세차타월",
+    tags: ["전문가 도구"],
+    thumbs: [
+      "img_001/yaumg.png"
+    ],
+    tip: "도장면 스크래치와 깊은 흠집을 빠르게 제거하는 최고급 천연 양모 버핑 패드입니다.",
+    features: [
+      { title: "천연 양모 소재", body: "도장면의 마찰열을 줄여 주며 강력한 컷팅력을 선사합니다." },
+      { title: "탁월한 밸런스", body: "떨림 현상을 줄여 작업자의 손 피로도를 최소화합니다." }
+    ],
+    steps: [
+      { title: "양모 정리", body: "사용 전 패드 브러쉬나 에어로 양모의 먼지와 뭉친 곳을 풀어 줍니다." },
+      { title: "컴파운드 도포", body: "패드 면에 컴파운드 약재를 적당량 도포합니다." },
+      { title: "컷팅 작업", body: "도장 손상 부위에 대고 적정 rpm으로 가압하며 스크래치를 제거합니다." }
+    ]
   }
 ];
 

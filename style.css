@@ -542,6 +542,7 @@ img:not([src]), img[src=""] {
   max-width: 1200px;
   margin: 48px auto;
   padding: 0 24px;
+  padding-bottom: 500px;
   position: relative;
 }
 .business-banner::before {
@@ -591,6 +592,103 @@ img:not([src]), img[src=""] {
 .business-btn:hover {
   background: var(--white);
   color: var(--navy);
+}
+
+/* ===================== EXPERT SECTION ===================== */
+.expert-section {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  height: 420px;
+}
+.expert-section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 20px;
+  text-align: left;
+}
+.expert-slider {
+  width: 100%;
+}
+.expert-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.expert-track::-webkit-scrollbar {
+  display: none;
+}
+.expert-card {
+  flex: 0 0 calc(25% - 15px);
+  min-width: 250px;
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+.expert-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.expert-card-img {
+  aspect-ratio: 1.2 / 1;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.expert-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.expert-card-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  background: #fafafa;
+  flex: 1;
+}
+.expert-card-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+  text-align: left;
+}
+.expert-card-price {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+  margin-top: auto;
+}
+.expert-progress {
+  width: 100%;
+  max-width: 300px;
+  height: 2px;
+  background: rgba(20, 35, 63, 0.15);
+  margin: 20px auto 0;
+  position: relative;
+  border-radius: 99px;
+}
+.expert-progress-bar {
+  height: 100%;
+  width: 40%;
+  background: var(--ink);
+  transition: transform 0.1s;
+  transform-origin: left;
 }
 
 /* ===================== RANKING ===================== */
@@ -809,7 +907,7 @@ img:not([src]), img[src=""] {
 .review-section {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 24px 300px;
+  padding: 40px 24px 100px;
 }
 .review-head {
   display: flex;
@@ -886,6 +984,75 @@ img:not([src]), img[src=""] {
   font-size: 14px;
   color: var(--ink);
   line-height: 1.5;
+}
+
+/* ===================== REVIEW PAGINATION ===================== */
+.review-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 48px;
+}
+.pagi-arrow {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: transform 0.2s;
+}
+.pagi-arrow svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 2px 4px rgba(20,35,63,0.15));
+}
+.pagi-arrow:hover {
+  transform: scale(1.2);
+}
+.pagi-arrow:active {
+  transform: scale(0.95);
+}
+.pagi-numbers {
+  display: flex;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+.pagi-number {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-en);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--white);
+  border: none;
+  border-right: 2px solid var(--ink);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+.pagi-number:last-child {
+  border-right: none;
+}
+.pagi-number:hover {
+  background-color: var(--mint-soft);
+}
+.pagi-number.active {
+  background-color: var(--blue);
+  color: var(--white);
 }
 
 /* ===================== FOOTER ===================== */
