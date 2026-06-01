@@ -86,7 +86,7 @@ img:not([src]), img[src=""] {
   top: 0;
   z-index: 100;
   background: var(--mint-soft);
-  border-bottom: 1px solid rgba(20,35,63,.06);
+  border-bottom: 1px solid #fafafa;
 }
 .header-inner {
   max-width: 1200px;
@@ -1214,7 +1214,7 @@ img:not([src]), img[src=""] {
 .rating-count { color: var(--gray-500); }
 .buy-divider {
   border: none;
-  border-top: 1px solid var(--gray-300);
+  border-top: 1px solid #fafafa;
   margin: 24px 0;
 }
 .buy-price-row {
@@ -1274,7 +1274,7 @@ img:not([src]), img[src=""] {
 .qty-control {
   display: flex;
   align-items: center;
-  border: 1px solid var(--gray-300);
+  border: 1px solid #fafafa;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -1300,7 +1300,7 @@ img:not([src]), img[src=""] {
   margin-bottom: 22px;
 }
 .btn-inquiry {
-  border: 1px solid var(--gray-300);
+  border: 1px solid #fafafa;
   border-radius: 10px;
   padding: 16px;
   font-size: 15px;
@@ -1489,7 +1489,7 @@ img:not([src]), img[src=""] {
 }
 .option-chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .option-chip {
-  border: 1.5px solid var(--gray-300);
+  border: 1.5px solid #fafafa;
   border-radius: 10px;
   padding: 11px 18px;
   font-size: 14px;
@@ -1508,7 +1508,7 @@ img:not([src]), img[src=""] {
   justify-content: space-between;
   align-items: center;
   padding: 18px 0;
-  border-top: 1px solid var(--gray-300);
+  border-top: 1px solid #fafafa;
   margin-bottom: 18px;
 }
 .option-total span { font-size: 15px; color: var(--gray-700); }
@@ -1597,7 +1597,7 @@ img:not([src]), img[src=""] {
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--gray-100);
+  border-bottom: 1px solid #fafafa;
 }
 .login-header h2 {
   font-size: 16px;
@@ -1714,7 +1714,7 @@ img:not([src]), img[src=""] {
 .login-divider::before, .login-divider::after {
   content: '';
   flex: 1;
-  border-bottom: 1px solid var(--gray-300);
+  border-bottom: 1px solid #fafafa;
 }
 .login-divider span {
   padding: 0 10px;
@@ -2032,7 +2032,7 @@ img:not([src]), img[src=""] {
 .cart-header {
   padding: 24px;
   display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 1px solid var(--gray-300);
+  border-bottom: 1px solid #fafafa;
 }
 .cart-header h2 { font-size: 20px; font-weight: 700; }
 .cart-close {
@@ -2049,7 +2049,7 @@ img:not([src]), img[src=""] {
 }
 .cart-item {
   display: flex; justify-content: space-between; align-items: center;
-  padding-bottom: 16px; border-bottom: 1px solid var(--gray-100);
+  padding-bottom: 16px; border-bottom: 1px solid #fafafa;
 }
 .cart-item-info { display: flex; flex-direction: column; gap: 4px; }
 .cart-item-name { font-weight: 600; font-size: 15px; }
@@ -2059,7 +2059,7 @@ img:not([src]), img[src=""] {
 .cart-item-del:hover { opacity: 0.7; text-decoration: underline; }
 .cart-empty { text-align: center; color: var(--gray-500); margin-top: 40px; font-weight: 500; }
 .cart-footer {
-  padding: 24px; border-top: 1px solid var(--gray-300);
+  padding: 24px; border-top: 1px solid #fafafa;
   background: var(--gray-100);
 }
 .cart-total {
@@ -2077,7 +2077,7 @@ img:not([src]), img[src=""] {
 }
 .detail-tabs {
   display: flex;
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid #fafafa;
   margin-top: 40px;
   margin-bottom: 32px;
 }
@@ -2121,7 +2121,7 @@ img:not([src]), img[src=""] {
   width: 100%;
   height: 600px;
   background: var(--gray-100);
-  border: 1px dashed var(--gray-300);
+  border: 1px dashed #fafafa;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2140,7 +2140,7 @@ img:not([src]), img[src=""] {
 }
 .pr-item {
   padding: 20px;
-  border: 1px solid var(--gray-200);
+  border: 1px solid #fafafa;
   border-radius: 8px;
   background: var(--white);
 }
@@ -2156,7 +2156,7 @@ img:not([src]), img[src=""] {
   width: 100%;
   background: var(--white);
   box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
-  border-top: 1px solid var(--gray-200);
+  border-top: 1px solid #fafafa;
   z-index: 900;
   transform: translateY(100%);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
