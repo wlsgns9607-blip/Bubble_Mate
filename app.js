@@ -917,7 +917,21 @@ function bindGlobal() {
     });
   }
   $$(".social-btn").forEach(btn => {
-    btn.addEventListener("click", () => simulateLogin("소셜유저"));
+    btn.addEventListener("click", () => {
+      if (btn.classList.contains("naver-btn")) {
+        const sdkBtn = document.querySelector("#naverIdLogin a");
+        if (sdkBtn) {
+          sdkBtn.click();
+        } else {
+          const state = Math.random().toString(36).substr(2, 9);
+          const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
+          const authUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=JL8HWkB7Y973grRkIS7L&redirect_uri=${redirectUri}&state=${state}`;
+          window.location.href = authUrl;
+        }
+      } else {
+        simulateLogin("소셜유저");
+      }
+    });
   });
   
   const logoutBtn = $("#logoutBtn");
@@ -1240,7 +1254,43 @@ function bindExpertSlider() {
 /* =========================================================
    12) 초기화
    ========================================================= */
+let naverLogin;
+
+function initNaverLogin() {
+  if (typeof naver === "undefined") return;
+  
+  naverLogin = new naver.LoginWithNaverId({
+    clientId: "JL8HWkB7Y973grRkIS7L",
+    callbackUrl: window.location.origin + window.location.pathname,
+    isPopup: false,
+    loginButton: { color: "green", type: 1, height: 48 }
+  });
+  naverLogin.init();
+
+  // 로그인 상태 체크 (콜백)
+  naverLogin.getLoginStatus(function (status) {
+    if (status) {
+      const email = naverLogin.user.getEmail();
+      const name = naverLogin.user.getName();
+      const nickname = naverLogin.user.getNickname();
+      const profileImage = naverLogin.user.getProfileImage();
+      
+      // 실제 유저 이름 또는 닉네임, 이메일 앞자리로 환영 인사
+      const userName = name || nickname || (email ? email.split("@")[0] : "네이버 회원");
+      simulateLogin(userName);
+
+      // URL 해시에 남아 있는 토큰 제거하여 주소창 깔끔하게 정리
+      if (history.replaceState) {
+        history.replaceState(null, document.title, window.location.pathname + window.location.search);
+      } else {
+        window.location.hash = "";
+      }
+    }
+  });
+}
+
 function init() {
+  initNaverLogin();
   checkLoginStatus();
   updateCartBadge();
   buildHero();
