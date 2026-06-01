@@ -109,7 +109,8 @@ function checkLoginStatus() {
 function simulateLogin(username) {
   localStorage.setItem('bubble_user', JSON.stringify({ name: username }));
   checkLoginStatus();
-  showToast(username + "님 환영합니다!");
+  alert("로그인이 되었습니다.");
+  goHome();
   closeLoginModal();
 }
 
@@ -919,17 +920,17 @@ function bindGlobal() {
   $$(".social-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       if (btn.classList.contains("naver-btn")) {
-        const sdkBtn = document.querySelector("#naverIdLogin a");
-        if (sdkBtn) {
-          sdkBtn.click();
-        } else {
-          const state = Math.random().toString(36).substr(2, 9);
-          const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
-          const authUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=JL8HWkB7Y973grRkIS7L&redirect_uri=${redirectUri}&state=${state}`;
-          window.open(authUrl, "naverLoginPopup", "width=460,height=600,scrollbars=no,toolbar=no,location=no,status=no,menubar=no");
-        }
+        const state = Math.random().toString(36).substr(2, 9);
+        const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
+        const authUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=JL8HWkB7Y973grRkIS7L&redirect_uri=${redirectUri}&state=${state}&auth_type=reprompt`;
+        window.open(authUrl, "naverLoginPopup", "width=460,height=600,scrollbars=no,toolbar=no,location=no,status=no,menubar=no,noopener=no");
       } else if (btn.classList.contains("kakao-btn")) {
         triggerKakaoLogin();
+      } else if (btn.classList.contains("google-btn")) {
+        const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
+        const clientId = "262097738935-8up53gfk9s72egsso67cucv7ep9fi1a0.apps.googleusercontent.com"; // 구글 클라이언트 ID
+        const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email&state=google`;
+        window.open(authUrl, "googleLoginPopup", "width=500,height=600,scrollbars=no,toolbar=no,location=no,status=no,menubar=no,noopener=no");
       } else {
         simulateLogin("소셜유저");
       }
@@ -979,6 +980,19 @@ function bindGlobal() {
       // Find the name input inside signup-modal
       const nameInput = document.querySelector(".signup-form input[placeholder*='홍길동']");
       const name = nameInput && nameInput.value.trim() ? nameInput.value.trim() : "신규회원";
+
+      // 비밀번호 검증 (특수문자 필수 포함)
+      const passwordInput = document.querySelector(".signup-form input[type='password']");
+      const password = passwordInput ? passwordInput.value : "";
+      const specialCharRegex = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/;
+
+      if (!specialCharRegex.test(password)) {
+        alert("비밀번호에는 특수문자가 반드시 포함되어야 합니다.");
+        if (passwordInput) {
+          passwordInput.focus();
+        }
+        return;
+      }
 
       // Close signup modal and overlay
       closeSignupModal();
@@ -1290,6 +1304,7 @@ let naverLogin;
 
 function initNaverLogin() {
   if (typeof naver === "undefined") return;
+  if (window.location.hash.includes("state=google")) return;
   
   naverLogin = new naver.LoginWithNaverId({
     clientId: "JL8HWkB7Y973grRkIS7L",
@@ -1331,6 +1346,39 @@ function initNaverLogin() {
 }
 
 function init() {
+  // Google OAuth 2.0 콜백 처리
+  if (window.location.hash.includes("access_token=") && window.location.hash.includes("state=google")) {
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const accessToken = hashParams.get("access_token");
+    
+    fetch("https://www.googleapis.com/oauth2/v3/userinfo?access_token=" + accessToken)
+      .then(res => res.json())
+      .then(data => {
+        const name = data.name || data.given_name || "구글 회원";
+        if (window.opener && !window.opener.closed) {
+          window.opener.simulateLogin(name);
+          window.close();
+        } else {
+          simulateLogin(name);
+          if (history.replaceState) {
+            history.replaceState(null, document.title, window.location.pathname + window.location.search);
+          } else {
+            window.location.hash = "";
+          }
+        }
+      })
+      .catch(err => {
+        console.error("Google 프로필 가져오기 실패:", err);
+        if (window.opener && !window.opener.closed) {
+          window.opener.simulateLogin("구글 회원");
+          window.close();
+        } else {
+          simulateLogin("구글 회원");
+        }
+      });
+    return;
+  }
+
   initKakaoLogin();
   initNaverLogin();
   checkLoginStatus();
