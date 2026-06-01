@@ -927,7 +927,7 @@ function bindGlobal() {
       } else if (btn.classList.contains("kakao-btn")) {
         triggerKakaoLogin();
       } else if (btn.classList.contains("google-btn")) {
-        const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
+        const redirectUri = encodeURIComponent(window.location.origin + "/index.html");
         const clientId = "262097738935-8up53gfk9s72egsso67cucv7ep9fi1a0.apps.googleusercontent.com"; // 구글 클라이언트 ID
         const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email&state=google`;
         window.open(authUrl, "googleLoginPopup", "width=500,height=600,scrollbars=no,toolbar=no,location=no,status=no,menubar=no,noopener=no");
