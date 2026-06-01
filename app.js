@@ -926,7 +926,7 @@ function bindGlobal() {
           const state = Math.random().toString(36).substr(2, 9);
           const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
           const authUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=JL8HWkB7Y973grRkIS7L&redirect_uri=${redirectUri}&state=${state}`;
-          window.location.href = authUrl;
+          window.open(authUrl, "naverLoginPopup", "width=460,height=600,scrollbars=no,toolbar=no,location=no,status=no,menubar=no");
         }
       } else {
         simulateLogin("소셜유저");
@@ -1262,7 +1262,7 @@ function initNaverLogin() {
   naverLogin = new naver.LoginWithNaverId({
     clientId: "JL8HWkB7Y973grRkIS7L",
     callbackUrl: window.location.origin + window.location.pathname,
-    isPopup: false,
+    isPopup: true,
     loginButton: { color: "green", type: 1, height: 48 }
   });
   naverLogin.init();
@@ -1273,17 +1273,26 @@ function initNaverLogin() {
       const email = naverLogin.user.getEmail();
       const name = naverLogin.user.getName();
       const nickname = naverLogin.user.getNickname();
-      const profileImage = naverLogin.user.getProfileImage();
       
-      // 실제 유저 이름 또는 닉네임, 이메일 앞자리로 환영 인사
       const userName = name || nickname || (email ? email.split("@")[0] : "네이버 회원");
-      simulateLogin(userName);
 
-      // URL 해시에 남아 있는 토큰 제거하여 주소창 깔끔하게 정리
-      if (history.replaceState) {
-        history.replaceState(null, document.title, window.location.pathname + window.location.search);
+      // 만약 팝업창 내부에서 콜백이 호출된 경우
+      if (window.opener && !window.opener.closed) {
+        try {
+          window.opener.simulateLogin(userName);
+          window.close();
+        } catch (e) {
+          console.error("부모 창 호출 실패:", e);
+          simulateLogin(userName);
+        }
       } else {
-        window.location.hash = "";
+        // 일반 페이지 리다이렉트 모드인 경우
+        simulateLogin(userName);
+        if (history.replaceState) {
+          history.replaceState(null, document.title, window.location.pathname + window.location.search);
+        } else {
+          window.location.hash = "";
+        }
       }
     }
   });
