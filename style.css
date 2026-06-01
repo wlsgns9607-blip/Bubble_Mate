@@ -1751,6 +1751,14 @@ img:not([src]), img[src=""] {
   width: 18px; height: 18px;
   fill: currentColor;
 }
+.naver-btn {
+  background: #03C75A;
+  color: var(--white);
+}
+.naver-icon {
+  width: 18px; height: 18px;
+  fill: currentColor;
+}
 
 /* ===================== SIGNUP MODAL ===================== */
 .signup-modal {
