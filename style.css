@@ -1022,7 +1022,7 @@ img:not([src]), img[src=""] {
 }
 .pagi-numbers {
   display: flex;
-  border: 2px solid var(--ink);
+  border: 2px solid #fafafa;
   border-radius: 6px;
   overflow: hidden;
   background: var(--white);
@@ -1040,7 +1040,7 @@ img:not([src]), img[src=""] {
   color: var(--ink);
   background: var(--white);
   border: none;
-  border-right: 2px solid var(--ink);
+  border-right: 2px solid #fafafa;
   cursor: pointer;
   transition: background-color 0.15s, color 0.15s;
 }
