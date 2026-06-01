@@ -498,7 +498,7 @@ const DEFAULT_PRODUCTS = [
   {
     id: "pro-emerald-wax",
     brand: "BUBBLE MATE",
-    name: "슈퍼 에메랄드 발수왁스",
+    name: "슈퍼 에메랄드 발수왁스 500ml",
     discount: 0,
     price: 54000,
     rating: 4.8,
