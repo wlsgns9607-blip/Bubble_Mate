@@ -928,6 +928,8 @@ function bindGlobal() {
           const authUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=JL8HWkB7Y973grRkIS7L&redirect_uri=${redirectUri}&state=${state}`;
           window.open(authUrl, "naverLoginPopup", "width=460,height=600,scrollbars=no,toolbar=no,location=no,status=no,menubar=no");
         }
+      } else if (btn.classList.contains("kakao-btn")) {
+        triggerKakaoLogin();
       } else {
         simulateLogin("소셜유저");
       }
@@ -1254,6 +1256,36 @@ function bindExpertSlider() {
 /* =========================================================
    12) 초기화
    ========================================================= */
+function initKakaoLogin() {
+  if (typeof Kakao === "undefined") return;
+  if (!Kakao.isInitialized()) {
+    Kakao.init("e0a6ce53de398c0b9d0461c66a666dc4");
+  }
+}
+
+function triggerKakaoLogin() {
+  if (typeof Kakao === "undefined") return;
+  Kakao.Auth.login({
+    success: function(authObj) {
+      Kakao.API.request({
+        url: '/v2/user/me',
+        success: function(res) {
+          const profile = res.kakao_account && res.kakao_account.profile;
+          const name = profile ? profile.nickname : "카카오 회원";
+          simulateLogin(name);
+        },
+        fail: function(error) {
+          console.error("카카오 프로필 정보 요청 실패:", error);
+          simulateLogin("카카오 회원");
+        }
+      });
+    },
+    fail: function(err) {
+      console.error("카카오 로그인 실패:", err);
+    }
+  });
+}
+
 let naverLogin;
 
 function initNaverLogin() {
@@ -1299,6 +1331,7 @@ function initNaverLogin() {
 }
 
 function init() {
+  initKakaoLogin();
   initNaverLogin();
   checkLoginStatus();
   updateCartBadge();
