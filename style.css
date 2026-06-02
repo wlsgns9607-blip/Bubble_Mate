@@ -2408,3 +2408,213 @@ img:not([src]), img[src=""] {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
+/* ===================== 갤럭시 플립 / 소형 모바일 (max-width: 420px) ===================== */
+@media (max-width: 420px) {
+  .header-inner { padding: 10px 12px; gap: 6px 8px; }
+  .logo { font-size: 18px; }
+  .search-box input { font-size: 13px; padding: 9px 10px; }
+  .login-btn { padding: 0 12px; font-size: 12px; height: 32px; }
+  .icon-btn { width: 32px; height: 32px; }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .icon-btn::after, .icon-btn::before { display: none; }
+
+  .hero { padding: 0 12px; margin-top: 16px; }
+  .hero-track { height: 280px; border-radius: 14px; }
+  .hero-title { font-size: 22px; margin-bottom: 10px; }
+  .hero-desc { font-size: 12px; margin-bottom: 16px; max-width: 100%; line-height: 1.5; }
+  .hero-badge { font-size: 10px; padding: 4px 10px; margin-bottom: 14px; }
+  .hero-cta { font-size: 13px; padding: 10px 22px; }
+  .hero-content { padding: 0 16px; max-width: 100%; }
+
+  .category-bar { margin-top: 16px; }
+  .category-list { padding: 16px 12px; gap: 14px 0; }
+  .category-item { flex: 0 0 33.333%; }
+  .category-icon { width: 52px; height: 52px; }
+  .category-icon svg { width: 22px; height: 22px; }
+  .category-label { font-size: 11px; }
+
+  .event-section { padding: 0 12px; margin-top: 24px; }
+  .event-title { font-size: 22px; }
+  .event-sub { font-size: 12px; }
+  .event-card { flex: 0 0 240px; height: 180px; }
+  .event-name { font-size: 15px; }
+  .event-price { font-size: 17px; }
+  .event-overlay { padding: 14px; }
+
+  .ranking { padding: 28px 12px 16px; }
+  .section-title { font-size: 18px; }
+  .product-grid { gap: 10px; }
+  .product-body { padding: 10px 12px 14px; }
+  .product-name { font-size: 13px; min-height: 36px; margin-bottom: 8px; }
+  .product-brand { font-size: 10px; }
+  .product-discount { font-size: 14px; }
+  .product-price { font-size: 14px; }
+  .product-rating { font-size: 11px; }
+
+  .business-banner { padding: 0 12px; padding-bottom: 400px; margin: 28px auto; }
+  .business-banner::before { height: 180px; width: calc(100% - 24px); left: 12px; }
+  .business-banner-content { height: 180px; padding: 0 16px; }
+  .business-banner h2 { font-size: 16px; margin-bottom: 10px; }
+  .business-btn { font-size: 12px; padding: 7px 16px; }
+
+  .expert-section { left: 12px; right: 12px; height: 340px; bottom: 16px; }
+  .expert-section-title { font-size: 20px; margin-bottom: 12px; }
+  .expert-card { min-width: 180px; }
+  .expert-card-name { font-size: 13px; }
+  .expert-card-price { font-size: 13px; }
+  .expert-card-info { padding: 10px; }
+
+  .promo-card { padding: 16px 12px; font-size: 13px; }
+  .coupon-badge { padding: 4px 10px; }
+  .coupon-val { font-size: 15px; }
+  .coupon-txt { font-size: 10px; }
+  .gift-box { width: 36px; height: 36px; font-size: 20px; }
+
+  .review-section { padding: 24px 12px 60px; }
+  .review-title { font-size: 22px; }
+  .review-sub { font-size: 12px; }
+  .review-text { font-size: 13px; }
+
+  .pagi-number { width: 32px; height: 32px; font-size: 12px; }
+  .pagi-arrow { width: 32px; height: 32px; }
+  .pagi-arrow svg { width: 18px; height: 18px; }
+  .review-pagination { gap: 8px; }
+
+  .footer-inner { padding: 28px 12px 18px; gap: 24px; }
+  .footer-brand h3 { font-size: 18px; }
+  .footer-brand p { font-size: 12px; }
+  .footer-col h4 { font-size: 13px; margin-bottom: 12px; }
+  .footer-col a { font-size: 12px; margin-bottom: 8px; }
+  .footer-bottom { font-size: 11px; padding: 16px; }
+
+  .detail-top { padding: 24px 0 36px; }
+  .detail-top-inner { padding: 0 12px; gap: 20px; }
+  .buy-panel { padding: 20px 16px; }
+  .buy-name { font-size: 20px; }
+  .buy-price { font-size: 22px; }
+  .buy-discount { font-size: 18px; }
+  .buy-brand { font-size: 11px; }
+  .expert-tip { padding: 12px 14px; margin: 18px 0; }
+  .expert-tip-head { font-size: 12px; }
+  .expert-tip-body { font-size: 12px; }
+
+  .detail-content-section { padding: 0 12px 60px; }
+  .tab-btn { font-size: 13px; padding: 10px 0; }
+  .info-title { font-size: 20px; }
+  .feature-card { padding: 18px 16px; gap: 12px; }
+  .feature-icon { width: 36px; height: 36px; }
+  .feature-icon svg { width: 18px; height: 18px; }
+  .feature-text h3 { font-size: 14px; }
+  .feature-text p { font-size: 12px; }
+  .step-num { width: 32px; height: 32px; font-size: 12px; }
+  .step-card h3 { font-size: 14px; }
+  .step-card p { font-size: 12px; }
+
+  .option-sheet { padding: 20px 16px 28px; }
+  .option-title { font-size: 17px; }
+  .option-total strong { font-size: 20px; }
+  .toss-btn { padding: 14px; font-size: 14px; }
+
+  .login-modal { width: 95%; }
+  .login-greeting { font-size: 20px; }
+  .login-subtext { font-size: 13px; }
+  .social-btn { font-size: 13px; padding: 10px 0; }
+
+  .signup-modal { width: 98%; }
+  .signup-hero h2 { font-size: 20px; }
+  .signup-input-wrapper input { font-size: 12px; padding: 10px 36px 10px 12px; }
+
+  .coupon-modal { padding: 24px 16px; }
+  .coupon-modal h2 { font-size: 18px; }
+  .coupon-desc { font-size: 12px; }
+  .coupon-value { font-size: 26px; }
+  .coupon-confirm-btn { font-size: 14px; padding: 12px; }
+
+  .cart-drawer { max-width: 100%; }
+  .cart-header { padding: 16px; }
+  .cart-header h2 { font-size: 18px; }
+  .cart-body { padding: 16px; }
+  .cart-item-name { font-size: 13px; }
+  .cart-total strong { font-size: 18px; }
+
+  .sticky-buy-inner { padding: 10px 12px; }
+  .sticky-name { max-width: 120px; font-size: 12px; }
+  .sticky-price { font-size: 14px; }
+  .sticky-btn { padding: 10px 18px; font-size: 13px; }
+
+  .toast { font-size: 12px; padding: 10px 18px; bottom: 80px; }
+}
+
+/* ===================== 갤럭시 폴드 접힌 상태 (max-width: 300px) ===================== */
+@media (max-width: 300px) {
+  .header-inner { padding: 8px 8px; gap: 4px 6px; }
+  .logo { font-size: 16px; }
+  .search-box { padding: 0 10px; }
+  .search-box input { font-size: 12px; padding: 8px 6px; }
+  .login-btn { padding: 0 8px; font-size: 11px; height: 28px; margin-left: 2px; }
+  .icon-btn { width: 28px; height: 28px; }
+  .header-icons { gap: 4px; }
+
+  #userProfile span { font-size: 10px !important; }
+  #userProfile button { padding: 3px 6px !important; font-size: 10px !important; }
+
+  .hero-track { height: 220px; }
+  .hero-title { font-size: 18px; }
+  .hero-desc { font-size: 11px; margin-bottom: 12px; }
+  .hero-badge { font-size: 9px; padding: 3px 8px; margin-bottom: 10px; }
+  .hero-cta { font-size: 11px; padding: 8px 16px; border-radius: 6px; }
+  .hero-content { padding: 0 12px; }
+
+  .category-list { padding: 12px 8px; gap: 10px 0; }
+  .category-icon { width: 42px; height: 42px; }
+  .category-icon svg { width: 18px; height: 18px; }
+  .category-label { font-size: 10px; }
+
+  .event-card { flex: 0 0 200px; height: 150px; }
+  .event-name { font-size: 13px; }
+  .event-price { font-size: 15px; }
+  .event-overlay { padding: 10px; }
+  .event-badge-red { width: 32px; height: 32px; font-size: 11px; }
+
+  .section-title { font-size: 16px; }
+  .section-sub { font-size: 11px; }
+  .product-grid { grid-template-columns: 1fr; gap: 12px; }
+  .product-name { font-size: 14px; min-height: auto; }
+  .product-body { padding: 12px 14px 16px; }
+
+  .business-banner { padding-bottom: 360px; }
+  .business-banner::before { height: 150px; }
+  .business-banner-content { height: 150px; padding: 0 12px; }
+  .business-banner h2 { font-size: 14px; margin-bottom: 8px; }
+  .business-btn { font-size: 11px; padding: 6px 14px; }
+
+  .expert-section { height: 300px; }
+  .expert-section-title { font-size: 18px; }
+  .expert-card { min-width: 150px; }
+  .expert-card-name { font-size: 12px; }
+  .expert-card-price { font-size: 12px; }
+
+  .promo-card { font-size: 12px; padding: 14px 10px; }
+
+  .review-title { font-size: 20px; }
+  .pagi-numbers { flex-wrap: wrap; max-width: 200px; }
+  .pagi-number { width: 28px; height: 28px; font-size: 11px; }
+
+  .footer-brand p { font-size: 11px; }
+  .newsletter { flex-direction: column; gap: 6px; }
+  .newsletter button { padding: 8px; width: 100%; text-align: center; }
+
+  .buy-name { font-size: 18px; }
+  .buy-price { font-size: 20px; }
+  .buy-discount { font-size: 16px; }
+
+  .login-greeting { font-size: 18px; }
+  .signup-hero h2 { font-size: 18px; }
+
+  .option-title { font-size: 15px; }
+  .option-total strong { font-size: 18px; }
+
+  .coupon-value { font-size: 22px; }
+  .coupon-modal h2 { font-size: 16px; }
+}
