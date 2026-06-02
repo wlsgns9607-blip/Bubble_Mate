@@ -6,7 +6,7 @@
 
 <br>
 
-<img src="img_001/g90.jpg" alt="Bubble Mate Hero" width="100%" style="border-radius: 12px;" />
+<img src="img_001/aston_martin.png" alt="Bubble Mate Hero" width="100%" style="border-radius: 12px;" />
 
 <br>
 
@@ -94,7 +94,7 @@ Vanilla JavaScript로 구현한 실전형 풀스택 쇼핑몰 포트폴리오
 
 ### 1. 🎠 동적 히어로 캐러셀 & 이벤트 슬라이더
 
-<img src="img_001/Bentley.png" alt="히어로 배너" width="60%" />
+<img src="img_001/g90.jpg" alt="히어로 배너" width="60%" />
 
 - 자동/수동 슬라이드 전환 (5.5초 간격)
 - 이벤트 카드 무한 루프 슬라이더 (복제 카드 트릭)
