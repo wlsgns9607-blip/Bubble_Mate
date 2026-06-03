@@ -446,7 +446,7 @@ img:not([src]), img[src=""] {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding-bottom: 12px;
+  padding: 12px 4px 20px 4px;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -454,7 +454,7 @@ img:not([src]), img[src=""] {
   display: none;
 }
 .event-card {
-  flex: 0 0 410px;
+  flex: 0 0 calc((100% - 48px) / 3);
   height: 310px;
   scroll-snap-align: start;
   position: relative;
@@ -492,6 +492,7 @@ img:not([src]), img[src=""] {
   position: absolute;
   top: 0;
   left: 0;
+  filter: brightness(0.6); /* 텍스트 가독성을 위해 이미지 밝기 낮춤 */
 }
 .event-overlay {
   position: absolute;
