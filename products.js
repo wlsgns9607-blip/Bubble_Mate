@@ -286,29 +286,29 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id: "event-wax-set",
-    brand: "TIGE",
-    name: "버킷+ 완벽발수 Tige왁스 + 드라잉타월 SET",
+    brand: "TIGER",
+    name: "버킷+ 완벽발수 Tiger왁스 + 드라잉타월 SET",
     discount: 30,
     price: 29800,
     rating: 5.0,
     ratingCount: 2050,
-    mainAlt: "버킷, Tige왁스, 드라잉타월 SET 이벤트 이미지",
+    mainAlt: "버킷, Tiger왁스, 드라잉타월 SET 이벤트 이미지",
     mainSrc: "img_001/car_003.png",
     category: "광택/코팅",
     tags: ["세트 상품", "외부 세차"],
     thumbs: [
-      "Tige왁스 세트 상세 이미지 1",
-      "Tige왁스 세트 상세 이미지 2"
+      "Tiger왁스 세트 상세 이미지 1",
+      "Tiger왁스 세트 상세 이미지 2"
     ],
     tip: "세차 입문자부터 전문가까지 필수템만 모았습니다. 한 번의 구매로 완벽한 세차를 준비하세요.",
     features: [
-      { title: "완벽 발수 코팅", body: "Tige왁스의 강력한 발수 효과로 비 오는 날에도 깨끗한 시야를 확보하세요." },
+      { title: "완벽 발수 코팅", body: "Tiger왁스의 강력한 발수 효과로 비 오는 날에도 깨끗한 시야를 확보하세요." },
       { title: "프리미엄 드라잉타월", body: "잔기스 없이 빠르고 완벽하게 물기를 제거하는 초고밀도 타월입니다." }
     ],
     steps: [
       { title: "버킷 세차", body: "버킷을 활용해 안전하게 세차를 진행합니다." },
       { title: "물기 제거", body: "세차 후 세트에 포함된 드라잉 타월로 물기를 부드럽게 제거합니다." },
-      { title: "왁스 시공", body: "Tige 왁스를 도포하고 닦아내어 완벽한 광택과 발수층을 형성합니다." }
+      { title: "왁스 시공", body: "Tiger 왁스를 도포하고 닦아내어 완벽한 광택과 발수층을 형성합니다." }
     ]
   },
   {
